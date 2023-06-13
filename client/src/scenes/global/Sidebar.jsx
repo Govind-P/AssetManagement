@@ -140,14 +140,14 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Building"
-              to="/contacts"
+              to="/building"
               icon={<ApartmentIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Employees"
-              to="/team"
+              to="/employee"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -243,27 +243,6 @@ const Sidebar = () => {
               title="Calendar"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
