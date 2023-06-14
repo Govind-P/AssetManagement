@@ -183,7 +183,7 @@ const Sidebar = () => {
             />
             <Item
               title="Automotive"
-              to="/form"
+              to="/automotive"
               icon={<DriveEtaIcon />}
               selected={selected}
               setSelected={setSelected}
