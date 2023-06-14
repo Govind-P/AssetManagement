@@ -29,7 +29,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function LoginPage() {
+export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -55,7 +55,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Register
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -79,27 +79,21 @@ export default function LoginPage() {
               autoComplete="current-password"
             />
             <Button
-              href='/dashboard'
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              LOGIN
+              REGISTER
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="/dashboard" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-              <Typography color="text.secondary" varient="body2">
+                <Typography color="text.secondary" align="center">
                 {"Don't have an account? "}
-                <Link href="/register" variant="body2">
-                  {"Sign Up"}
+                <Link href="/" variant="body2">
+                  {"Login"}
                 </Link>
-              </Typography>
+                </Typography>
               </Grid>
             </Grid>
           </Box>
