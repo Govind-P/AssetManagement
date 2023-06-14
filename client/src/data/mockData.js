@@ -1281,3 +1281,16 @@ export const mockGeographyData = [
     value: 171135,
   },
 ];
+
+
+export const mockDataAutomotive = [
+  {
+    id: 1,
+    vehicleno: "KL01W0001",
+    vehiclemodel: "inova",
+    colour: "black",
+    Vehiclestatus: "active",
+    
+  },
+ 
+];

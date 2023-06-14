@@ -1,55 +1,36 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
+import { mockDataAutomotive } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-
-const Contacts = () => {
+import {  Button, IconButton, Typography } from "@mui/material";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+const Automotive = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "ID", flex: 0.01 },
+    { field: "vehicleno", headerName: "Vehicle No",flex:1 },
     {
-      field: "name",
-      headerName: "Name",
+      field: "vehiclemodel",
+      headerName: "Vehicle Model",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
+      field: "colour",
+      headerName: "Colour",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "Vehiclestatus",
+      headerName: "Vehicle Status",
       flex: 1,
     },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 1,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
+    
   ];
 
   return (
@@ -58,6 +39,21 @@ const Contacts = () => {
         title="AUTOMOTIVE"
         subtitle="List of Vehicles for Future Reference"
       />
+      <Box>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              
+            }}
+          >
+            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            ADD
+          </Button>
+        </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -91,7 +87,7 @@ const Contacts = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={mockDataAutomotive}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
@@ -100,4 +96,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Automotive;
