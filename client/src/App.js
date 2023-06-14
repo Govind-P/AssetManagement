@@ -10,6 +10,7 @@ import Employee from "./scenes/employee";
 import Form from "./scenes/form";
 import FAQ from "./scenes/faq";
 import LoginPage from "./scenes/loginpage";
+import Register from "./scenes/register";
 import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -24,11 +25,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-        {location.pathname !== "/" && <Sidebar isSidebar={isSidebar} />}
+        {(location.pathname !== "/"  && <Sidebar isSidebar={isSidebar} />) && (location.pathname !== "/register"  && <Sidebar isSidebar={isSidebar} />) }
         <main className="content">
-        {location.pathname !== "/" && <Topbar setIsSidebar={setIsSidebar} />}
+        {location.pathname !== "/"  && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-            <Route path="/" element={<LoginPage />} />
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/register" element={<Register />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/contacts" element={<Contacts />} />
