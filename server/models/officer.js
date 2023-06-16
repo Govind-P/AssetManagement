@@ -15,6 +15,10 @@ const OfficerSchema=new mongoose.Schema(
             max:50,
             unique:true,
         },
+        buildingtype:{
+            type:String,
+            required:true,
+        },
         password:{
             type:String,
             required:true,

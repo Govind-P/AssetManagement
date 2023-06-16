@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route,Navigate, useLocation } from "react-router-dom";
+import { Routes, Route,Navigate, useLocation,BrowserRouter } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -9,6 +9,7 @@ import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Employee from "./scenes/employee";
 import Form from "./scenes/form";
+import { useSelector } from "react-redux";
 import FAQ from "./scenes/faq";
 import LoginPage from "./scenes/loginpage";
 import Register from "./scenes/register";
@@ -17,10 +18,12 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const location = useLocation();
+  const location=useLocation();
+  const isAuth = Boolean(useSelector((state) => state.token));
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -31,8 +34,11 @@ function App() {
         {location.pathname !== "/"  && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/" element={<LoginPage />} />
+              <Route
+                path="/dashboard"
+              element={isAuth ? <Dashboard /> : <Navigate to="/" />}
+              />
               <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employee" element={<Employee />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />

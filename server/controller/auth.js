@@ -7,6 +7,7 @@ export const register=async(req, res) =>{
         const{
             buildingname,
             buildingcode,
+            buildingtype,
             password,
             email,
             district,
@@ -22,6 +23,7 @@ export const register=async(req, res) =>{
         const newOfficer=new officer({
             buildingname,
             buildingcode,
+            buildingtype,
             password:passwordHash,
             email,
             district,
@@ -42,6 +44,7 @@ export const register=async(req, res) =>{
 const login = async (req, res)=>{
     try{
         const {email,password}=req.body;
+        console.log(email, password)
         const officers=await officer.findOne({email:email});
         if(!officers){return res.status(400).json({msg : 'user doesnot exist' })}
 

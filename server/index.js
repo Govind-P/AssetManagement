@@ -17,8 +17,8 @@ app.use(cors());
 
 
 /*Route*/
-app.use('/auth/register',register);
-app.use("/auth",authRoutes);
+app.use('/register',register);
+app.use("/",authRoutes);
 app.use("/users",userRoutes);
 
 /*MONGOOSE SETUP*/
@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGO_URL,{
 }).then(()=>{
     app.listen(PORT,()=>console.log('Server port:'+PORT));
     /*ADD DATA ONETIME*/
-    officer.insertMany(officers);
-    console.log('Data inserted');
+    //officer.insertMany(officers);
+    //console.log('Data inserted');
     //Post.insertMany(posts);
 }).catch((err)=>{console.log(err)});

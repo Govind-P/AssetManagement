@@ -6,10 +6,11 @@ const userIds = [
 ];
 
 export const officers = [
-/*{
+{
     _id: userIds[0],
     buildingname: "Village Office",
     buildingcode: "1256",
+    buildingtype: "govt office",
     email: "aaaaaaa@gmail.com",
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     district:"Thrissur",
@@ -21,11 +22,12 @@ export const officers = [
     createdAt: 1115211422,
     updatedAt: 1115211422,
     __v: 0,
-},*/
+},
 {
     _id: userIds[1],
     buildingname: "CET",
     buildingcode: "1246",
+    buildingtype: "college",
     email: "thataaa@gmail.com",
     password: "$!FEAS@!O)_IDJda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     district:"Trivandrum",
