@@ -5,20 +5,18 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Building from "./scenes/building";
 import Automotive from "./scenes/automotive";
-import Electronic from "./scenes/electronics";
-import Furniture from "./scenes/furniture";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Employee from "./scenes/employee";
 import Form from "./scenes/form";
-import { useSelector } from "react-redux";
 import FAQ from "./scenes/faq";
 import LoginPage from "./scenes/loginpage";
 import Register from "./scenes/register";
-import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+import { useSelector } from "react-redux";
+import { Provider } from 'react-redux';
 
 
 function App() {
@@ -26,6 +24,8 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const location=useLocation();
   const isAuth = Boolean(useSelector((state) => state.token));
+  console.log(useSelector((state) => state.token));
+  
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -35,23 +35,20 @@ function App() {
         <main className="content">
         {location.pathname !== "/"  && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-              <Route path="/" element={<LoginPage />} />
+              <Route path="/" element={!isAuth ? <LoginPage /> : <Navigate to="/dashboard"/>} />
               <Route
                 path="/dashboard"
-              element={isAuth ? <Dashboard /> : <Navigate to="/" />}
+              element={isAuth ? <Dashboard /> : <Navigate to="/"/>}
               />
               <Route path="/register" element={<Register />} />
-              <Route path="/employee" element={<Employee />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<Invoices />} />
-              <Route path="/building" element={<Building />} />
-              <Route path="/automotive" element={<Automotive />} />
-              <Route path="/electronic" element={<Electronic />} />
-              <Route path="/furniture" element={<Furniture />} />
-              <Route path="/form" element={<Form />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/geography" element={<Geography />} />
+              <Route path="/employee" element={isAuth ? <Employee /> : <Navigate to="/"/>} />
+              <Route path="/contacts" element={isAuth ? <Contacts /> : <Navigate to="/"/>} />
+              <Route path="/invoices" element={isAuth ? <Invoices /> : <Navigate to="/"/>} />
+              <Route path="/building" element={isAuth ? <Building /> : <Navigate to="/"/>} />
+              <Route path="/automotive" element={isAuth ? <Automotive /> : <Navigate to="/"/>} />
+              <Route path="/form" element={isAuth ? <Form /> : <Navigate to="/"/>} />
+              <Route path="/faq" element={isAuth ? <FAQ /> : <Navigate to="/"/>} />
+              <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/"/>} />
             </Routes>
           </main>
         </div>

@@ -1,5 +1,7 @@
 
 import * as React from 'react';
+import { useFormik } from 'formik';
+import { useDispatch} from "react-redux";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,8 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { redirect, useNavigate } from "react-router-dom";
 import { setLogin } from "../../state";
 
 function Copyright(props) {
@@ -30,33 +31,35 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LoginIn() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch=useDispatch();
   const [values, setValues] = React.useState({ email: '', password: '' });
+  const navigate = useNavigate();
 
-  const login = async (values, onSubmitProps) => {
+  const login = async (values) => {
     const loggedInResponse = await fetch('http://localhost:3001/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
     if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token,
-        })
-      );
-      navigate('/dashboard');
+      dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
+      navigate("/dashboard");
+      
     }
   };
 
-  const handleSubmit = async (values, { resetForm }) => {
-    await login(values, { resetForm });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await login(values);
   };
 
+  const handleInputChange = (event) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -85,6 +88,7 @@ export default function LoginIn() {
               value={values.email}
               label="Email Address"
               name="email"
+              onChange={handleInputChange}
               autoComplete="email"
               autoFocus
             />
@@ -94,6 +98,7 @@ export default function LoginIn() {
               fullWidth
               name="password"
               value={values.password}
+              onChange={handleInputChange}
               label="Password"
               type="password"
               id="password"
