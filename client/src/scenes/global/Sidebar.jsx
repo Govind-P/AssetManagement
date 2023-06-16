@@ -169,14 +169,14 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Electronic"
-              to="/form"
+              to="/electronic"
               icon={<DevicesIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Furniture"
-              to="/form"
+              to="/furniture"
               icon={<TableRestaurantIcon />}
               selected={selected}
               setSelected={setSelected}
