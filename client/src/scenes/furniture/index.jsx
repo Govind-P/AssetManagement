@@ -1,35 +1,41 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataAutomotive } from "../../data/mockData";
+import { mockDataFurniture } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-const Automotive = () => {
+const Furniture = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "vehicleno", headerName: "Vehicle No",flex:1 },
+    { field: "type", headerName: "Type",flex:1 },
     {
-      field: "vehiclemodel",
-      headerName: "Vehicle Model",
+      field: "regid",
+      headerName: "Register id",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "colour",
-      headerName: "Colour",
+      field: "installeddate",
+      headerName: "Installed Date",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "Vehiclestatus",
-      headerName: "Vehicle Status",
+      field: "expense",
+      headerName: "Expense",
       flex: 1,
     },
+    {
+        field: "status",
+        headerName: "status",
+        flex: 1,
+    },
+      
     
   ];
 
@@ -37,8 +43,8 @@ const Automotive = () => {
     <Box m="20px">
     <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
       <Header
-        title="AUTOMOTIVE"
-        subtitle="List of Vehicles for Future Reference"
+        title="FURNITURE"
+        subtitle="List of Furnitures for Future Reference"
       />
       <Box>
           <Button
@@ -91,7 +97,7 @@ const Automotive = () => {
         }}
       >
         <DataGrid
-          rows={mockDataAutomotive}
+          rows={mockDataFurniture}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
@@ -100,4 +106,4 @@ const Automotive = () => {
   );
 };
 
-export default Automotive;
+export default Furniture;

@@ -1,63 +1,80 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataAutomotive } from "../../data/mockData";
+import { mockDataElectronic } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import {  Button, IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-const Automotive = () => {
+import { Link } from "react-router-dom";
+import MyForm from "../electronicform";
+const Electronic = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "vehicleno", headerName: "Vehicle No",flex:1 },
+    { field: "type", headerName: "Type", flex: 1 },
     {
-      field: "vehiclemodel",
-      headerName: "Vehicle Model",
+      field: "brand",
+      headerName: "Brand Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "colour",
-      headerName: "Colour",
+      field: "model",
+      headerName: "Model Name",
+      flex: 1,
+    },
+    {
+      field: "installeddate",
+      headerName: "Installed Date",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "Vehiclestatus",
-      headerName: "Vehicle Status",
+      field: "expense",
+      headerName: "Expense",
       flex: 1,
     },
-    
+    {
+      field: "status",
+      headerName: "status",
+      flex: 1,
+    },
   ];
 
   return (
     <Box m="20px">
-    <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      ></Box>
       <Header
-        title="AUTOMOTIVE"
-        subtitle="List of Vehicles for Future Reference"
+        title="ELECTRONICS"
+        subtitle="List of Electronics for Future Reference"
       />
       <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              position : "absolute",
-              right : 20,
-              top : 150,
-              
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            ADD
-          </Button>
-        </Box>
+        <Button
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            position: "absolute",
+            right: 20,
+            top: 150,
+          }}
+        >
+          <Link to="MyForm">
+          
+          <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+          ADD
+          </Link>
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -91,7 +108,7 @@ const Automotive = () => {
         }}
       >
         <DataGrid
-          rows={mockDataAutomotive}
+          rows={mockDataElectronic}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
@@ -100,4 +117,4 @@ const Automotive = () => {
   );
 };
 
-export default Automotive;
+export default Electronic;

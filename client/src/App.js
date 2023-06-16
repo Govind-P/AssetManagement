@@ -5,6 +5,8 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Building from "./scenes/building";
 import Automotive from "./scenes/automotive";
+import Electronic from "./scenes/electronics";
+import Furniture from "./scenes/furniture";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Employee from "./scenes/employee";
@@ -38,6 +40,8 @@ function App() {
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/building" element={<Building />} />
               <Route path="/automotive" element={<Automotive />} />
+              <Route path="/electronic" element={<Electronic />} />
+              <Route path="/furniture" element={<Furniture />} />
               <Route path="/form" element={<Form />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />

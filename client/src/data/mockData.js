@@ -1292,5 +1292,32 @@ export const mockDataAutomotive = [
     Vehiclestatus: "active",
     
   },
+];
+  export const mockDataElectronic = [
+    {
+      id: 1,
+      type: "laptop",
+      brand: "lenovo",
+      model: "ideapad3",
+      installeddate: "13/06/2023",
+      expense: "40000",
+      status: "active",
+      
+    },
+   
  
+];
+export const mockDataFurniture = [
+  {
+    id: 1,
+    type: "table",
+    regid: "ccyb",
+    model: "ideapad3",
+    installeddate: "13/06/2023",
+    expense: "4000",
+    status: "active",
+    
+  },
+ 
+
 ];
