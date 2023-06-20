@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const userIds = [
     new mongoose.Types.ObjectId(),
     new mongoose.Types.ObjectId(),
+    new mongoose.Types.ObjectId(),
 ];
 
 export const officers = [
@@ -40,4 +41,21 @@ export const officers = [
     updatedAt: 1595589072,
     __v: 0,
 },
+{
+    _id: userIds[2],
+    buildingname: "NSS",
+    buildingcode: "3453",
+    buildingtype: "college",
+    email: "nssp@gmail.com",
+    password: "$2b$10$zyt0E41stdBLVeFcUDjfJey1aLz1RuN5xybSGYuwvBINuptOtBQtC",
+    district:"Palakkad",
+    mpc:"Kolathur",
+    locality: "Sreekaryam",
+    ward:"12",
+    postoffice: "Sreekariyam",
+    pincode:"680000",
+    createdAt: 1595589072,
+    updatedAt: 1595589072,
+    __v: 0,
+}
 ];

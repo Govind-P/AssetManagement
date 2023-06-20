@@ -5,6 +5,7 @@ import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Building from "./scenes/building";
 import Automotive from "./scenes/automotive";
+import Electronic from "./scenes/electronics";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Employee from "./scenes/employee";
@@ -17,6 +18,7 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import { useSelector } from "react-redux";
 import { Provider } from 'react-redux';
+import MyForm from "./scenes/electronicform";
 
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
               <Route path="/invoices" element={isAuth ? <Invoices /> : <Navigate to="/"/>} />
               <Route path="/building" element={isAuth ? <Building /> : <Navigate to="/"/>} />
               <Route path="/automotive" element={isAuth ? <Automotive /> : <Navigate to="/"/>} />
+              <Route path="/electronics" element={isAuth ? <Electronic /> : <Navigate to="/"/>} />
+              <Route path="/electronicform" element={isAuth ? <MyForm /> : <Navigate to="/"/>} />
               <Route path="/form" element={isAuth ? <Form /> : <Navigate to="/"/>} />
               <Route path="/faq" element={isAuth ? <FAQ /> : <Navigate to="/"/>} />
               <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/"/>} />

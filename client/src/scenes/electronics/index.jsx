@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { Button, IconButton, Typography } from "@mui/material";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import MyForm from "../electronicform";
 const Electronic = () => {
   const theme = useTheme();
@@ -56,24 +56,27 @@ const Electronic = () => {
         subtitle="List of Electronics for Future Reference"
       />
       <Box>
-        <Button
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            position: "absolute",
-            right: 20,
-            top: 150,
-          }}
-        >
-          <Link to="MyForm">
-          
-          <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-          ADD
-          </Link>
-        </Button>
+        <Link to="/electronicform">
+          <Button 
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              position: "absolute",
+              right: 20,
+              top: 150,
+              
+            }}
+          >
+            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            ADD
+          </Button>
+        </Link>
+        <Routes>
+          <Route path="/electronicform" element={<MyForm />} />
+        </Routes>
       </Box>
       <Box
         m="40px 0 0 0"

@@ -31,7 +31,7 @@ mongoose.connect(process.env.MONGO_URL,{
 }).then(()=>{
     app.listen(PORT,()=>console.log('Server port:'+PORT));
     /*ADD DATA ONETIME*/
-    //officer.insertMany(officers);
-    //console.log('Data inserted');
-    //Post.insertMany(posts);
+    // officer.insertMany(officers);
+    // console.log('Data inserted');
+    // Post.insertMany(posts);
 }).catch((err)=>{console.log(err)});
