@@ -8,7 +8,10 @@ import Automotive from "./scenes/automotive";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Employee from "./scenes/employee";
-import Form from "./scenes/form";
+import Furniture from "./scenes/furniture";
+import FurnitureForm from "./scenes/furnitureform";
+import AutomotiveForm from "./scenes/automotiveform";
+import EmployeeForm from "./scenes/employeeform";
 import FAQ from "./scenes/faq";
 import LoginPage from "./scenes/loginpage";
 import Register from "./scenes/register";
@@ -46,9 +49,12 @@ function App() {
               <Route path="/invoices" element={isAuth ? <Invoices /> : <Navigate to="/"/>} />
               <Route path="/building" element={isAuth ? <Building /> : <Navigate to="/"/>} />
               <Route path="/automotive" element={isAuth ? <Automotive /> : <Navigate to="/"/>} />
-              <Route path="/form" element={isAuth ? <Form /> : <Navigate to="/"/>} />
+              <Route path="/automotive/addautomotive" element={isAuth ? <AutomotiveForm /> : <Navigate to="/"/>} />
+              <Route path="/employee/addemployee" element={isAuth ? <EmployeeForm /> : <Navigate to="/"/>} />
               <Route path="/faq" element={isAuth ? <FAQ /> : <Navigate to="/"/>} />
               <Route path="/calendar" element={isAuth ? <Calendar /> : <Navigate to="/"/>} />
+              <Route path="/furniture" element={<Furniture />} />
+              <Route path="/furniture/addfurniture" element={<FurnitureForm />} />
             </Routes>
           </main>
         </div>

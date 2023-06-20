@@ -114,7 +114,7 @@ const Sidebar = () => {
                 fontWeight="bold"
                 sx={{ m: "10px 0 0 0" }}
               >
-                ASSET
+                ASSETMASTER
               </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   GOVT OF KERALA
@@ -243,13 +243,6 @@ const Sidebar = () => {
               title="Calendar"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

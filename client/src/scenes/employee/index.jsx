@@ -6,10 +6,16 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
-
+import {  Button } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router-dom";
 const Employee = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate=useNavigate();
+  const handleChange = () => {
+    navigate("/employee/addemployee");
+  };
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -70,7 +76,26 @@ const Employee = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
+      <Header title="Employee"  />
+      <Box>
+        <Button
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            position : "absolute",
+            right : 20,
+            top : 100,
+          }}
+          onClick={handleChange}
+        >
+          <AddIcon sx={{ mr: "10px" }} />
+          ADD
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
