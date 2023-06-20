@@ -1,13 +1,11 @@
 
 import * as React from 'react';
-import { useFormik } from 'formik';
 import { useDispatch} from "react-redux";
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -42,10 +40,13 @@ export default function LoginIn() {
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
-    if (loggedIn) {
+    console.log(loggedIn.msg);
+    if (loggedInResponse.ok) {
       dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
       navigate("/dashboard");
-      
+    }
+    else{
+      navigate("/");
     }
   };
 
@@ -103,10 +104,6 @@ export default function LoginIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"

@@ -5,10 +5,15 @@ import { mockDataFurniture } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router-dom";
 const Furniture = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate=useNavigate();
+  const handleChange = () => {
+    navigate("/furniture/addfurniture");
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
@@ -44,7 +49,6 @@ const Furniture = () => {
     <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
       <Header
         title="FURNITURE"
-        subtitle="List of Furnitures for Future Reference"
       />
       <Box>
           <Button
@@ -56,11 +60,11 @@ const Furniture = () => {
               padding: "10px 20px",
               position : "absolute",
               right : 20,
-              top : 150,
-              
+              top : 100,
             }}
+            onClick={handleChange}
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            <AddIcon sx={{ mr: "10px" }} />
             ADD
           </Button>
         </Box>

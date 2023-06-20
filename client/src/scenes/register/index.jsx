@@ -53,16 +53,20 @@ export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:3001/register', {
+    const reg=fetch('http://localhost:3001/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data); 
+      .then((response) => {
+        if (response.status !== 201)
+          throw response;
+        return response.json()
+      }).then(data => {
+        alert("User Successfully registered");
+        navigate("/");
         setFormData({
           buildingname: '',
           buildingcode: '',
@@ -76,10 +80,9 @@ export default function Register() {
           email: '',
           password: '',
         });
-        alert("User Successfully registered");
-        navigate("/");
-      })
+  })
       .catch((error) => {
+        alert("Please fill all fields");
         console.error(error);
       });
   };
@@ -201,7 +204,7 @@ export default function Register() {
               fullWidth
               id="pincode"
               value={formData.pincode}
-              label="pincode Code"
+              label="PinCode"
               name="pincode"
               autoComplete="pincode"
               onChange={handleInputChange}
@@ -215,7 +218,6 @@ export default function Register() {
               label="Locality"
               value={formData.locality}
               name="locality"
-              autoComplete="locality"
               onChange={handleInputChange}
               autoFocus
             />

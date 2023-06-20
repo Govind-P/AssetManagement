@@ -14,7 +14,45 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-const AutomotiveForm = () => {
+const type = [
+  {
+    value: 'table',
+    label: 'Table',
+  },
+  {
+    value: 'chair',
+    label: 'Chair',
+  },
+  {
+    value: 'dusk',
+    label: 'Dusk',
+  },
+  {
+    value: 'bench',
+    label: 'Bench',
+  },
+];
+const madeof = [
+  {
+    value: 'wood',
+    label: 'Wood',
+  },
+  {
+    value: 'palstic',
+    label: 'Plastic',
+  },
+  {
+    value: 'metal',
+    label: 'Metal',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+  },
+];
+
+
+const FurnitureForm = () => {
   const theme = useTheme();
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -22,12 +60,12 @@ const AutomotiveForm = () => {
   const navigate=useNavigate();
 
   const handleSubmit = (values) => {
-    navigate("/automotive");
+    navigate("/furniture");
   };
 
   return (
     <Box m="20px">
-      <Header title="ADD AUTOMOTIVE" />
+      <Header title="ADD FURNITURES" />
 
       <Formik
         onSubmit={handleSubmit}
@@ -52,72 +90,54 @@ const AutomotiveForm = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-            <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Vehicle No"
+                label="Furniture Code"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.vehicleno}
-                name="vehicleno"
-                error={!!touched.vehicleno && !!errors.vehicleno}
-                helperText={touched.vehicleno && errors.vehicleno}
-                sx={{ gridColumn: "span 1" }}
-            />
-            <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Vehicle Model"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.model}
-                name="model"
-                error={!!touched.model && !!errors.model}
-                helperText={touched.model && errors.model}
+                value={values.fcode}
+                name="fcode"
+                error={!!touched.fcode && !!errors.fcode}
+                helperText={touched.fcode && errors.fcode}
                 sx={{ gridColumn: "span 2" }}
-            />
-            <TextField
-                fullWidth
+              />
+              <TextField
+                id="filled-select-currency"
+                select
+                label="Select"
+                defaultValue="table"
+                value={values.ftype}
+                name="ftype"
+                helperText="Please select furniture type"
                 variant="filled"
-                type="text"
-                label="Chassis Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.cno}
-                name="cno"
-                error={!!touched.cno && !!errors.cno}
-                helperText={touched.cno && errors.cno}
-                sx={{ gridColumn: "span 1" }}
-            />
-            <TextField
-                fullWidth
+                sx={{ gridColumn: "span 2" }}
+              >
+                {type.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                id="filled-select-currency"
+                select
+                label="Select"
+                defaultValue=""
+                value={values.madeof}
+                name="madeof"
+                helperText="Please select furniture material"
                 variant="filled"
-                type="text"
-                label="Vehicle Color"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.color}
-                name="color"
-                error={!!touched.color && !!errors.color}
-                helperText={touched.color && errors.color}
-                sx={{ gridColumn: "span 1" }}
-            />
-            <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Fuel Type"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.fueltype}
-                name="fueltype"
-                error={!!touched.fueltype && !!errors.fueltype}
-                helperText={touched.fueltype && errors.fueltype}
-                sx={{ gridColumn: "span 1" }}
-            />
-            <TextField
+                sx={{ gridColumn: "span 2" }}
+              >
+                {madeof.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))} 
+              </TextField>             
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -129,8 +149,8 @@ const AutomotiveForm = () => {
                 error={!!touched.expense && !!errors.expense}
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
-            />
-            <TextField
+              />
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -142,40 +162,7 @@ const AutomotiveForm = () => {
                 error={!!touched.idate && !!errors.idate}
                 helperText={touched.idate && errors.idate}
                 sx={{ gridColumn: "span 1" }}
-            />
-            </Box>
-            <Box
-              gridColumn="span 4"
-              border={`1px solid ${palette.neutral.any}`}
-              borderRadius="5px"
-              p="1rem"
-            >
-              <Dropzone
-                acceptedFiles=".jpg,.jpeg,.png"
-                multiple={false}
-                onDrop={(acceptedFiles) =>
-                  setFieldValue("bill", acceptedFiles[0])
-                }
-              >
-                {({ getRootProps, getInputProps }) => (
-                  <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${palette.secondary.main}`}
-                    p="1rem"
-                    sx={{ "&:hover": { cursor: "pointer" } }}
-                  >
-                    <input {...getInputProps()} />
-                    {!values.bill ? (
-                      <p>Upload Purchase invoice</p>
-                    ) : (
-                      <FlexBetween>
-                        <Typography>{values.bill.name}</Typography>
-                        <EditOutlinedIcon />
-                      </FlexBetween>
-                    )}
-                  </Box>
-                )}
-              </Dropzone>
+              />
             </Box>
             <Box
               gridColumn="span 4"
@@ -199,7 +186,7 @@ const AutomotiveForm = () => {
                   >
                     <input {...getInputProps()} />
                     {!values.picture ? (
-                      <p>Upload Automotive Image with Vehicle number visible</p>
+                      <p>Upload Purchase invoice</p>
                     ) : (
                       <FlexBetween>
                         <Typography>{values.picture.name}</Typography>
@@ -225,23 +212,19 @@ const AutomotiveForm = () => {
 
 
 const checkoutSchema = yup.object().shape({
-  vehicleno: yup.string().required("required"),
-  model: yup.string().required("required"),
-  cno: yup.string().required("required"),
-  fueltype: yup.string().required("required"),
-  color: yup.string().required("required"),
+  fcode: yup.string().required("required"),
+  //ftype: yup.string().required("required"),
+  //madeof: yup.string().required("required"),
   idate: yup.string().required("required"),
   expense: yup.string().required("required"),
 });
 const initialValues = {
-  vehicleno: "",
-  model:"",
-  fueltype: "",
-  cno:"",
-  color: "",
+  fcode: "",
+  ftype: "",
+  madeof: "",
   idate: "",
-  status:"",
   expense: "",
+  picture:""
 };
 
-export default AutomotiveForm;
+export default FurnitureForm;

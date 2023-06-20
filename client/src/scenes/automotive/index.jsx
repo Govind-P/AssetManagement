@@ -5,10 +5,15 @@ import { mockDataAutomotive } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 const Automotive = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate=useNavigate();
+  const handleChange = () => {
+    navigate("/automotive/addautomotive");
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
@@ -37,8 +42,7 @@ const Automotive = () => {
     <Box m="20px">
     <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
       <Header
-        title="AUTOMOTIVE"
-        subtitle="List of Vehicles for Future Reference"
+        title="AUTOMOTIVES"
       />
       <Box>
           <Button
@@ -50,11 +54,11 @@ const Automotive = () => {
               padding: "10px 20px",
               position : "absolute",
               right : 20,
-              top : 150,
-              
+              top : 100, 
             }}
+            onClick={handleChange}
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            <AddIcon sx={{ mr: "10px" }} />
             ADD
           </Button>
         </Box>

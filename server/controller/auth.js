@@ -46,7 +46,7 @@ const login = async (req, res)=>{
         const {email,password}=req.body;
         console.log(email, password)
         const officers=await officer.findOne({email:email});
-        if(!officers){return res.status(400).json({msg : 'user doesnot exist' })}
+        if(!officers){return res.status(400).json({msg : 'User doesnot exist' })}
 
         const isMatch=await bcrypt.compare(password,officers.password);
         if(!isMatch){return res.status(400).json({msg : 'Invalid credential' })}

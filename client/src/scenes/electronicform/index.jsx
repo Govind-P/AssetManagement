@@ -1,25 +1,74 @@
-import { Box, Button, TextField } from "@mui/material";
-//import { Formik } from "formik";
-import { useState } from "react";
-
-import { Form } from "react-router-dom";
+import { Box, Button, TextField,useTheme,Typography } from "@mui/material";
+import { tokens } from "../../theme";
+import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Header from "../../components/Header";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Switch from '@mui/material/Switch';
+import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from "react-router-dom";
+import Dropzone from "react-dropzone";
+import FlexBetween from "../../components/FlexBetween";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-const MyForm = () => {
+const type = [
+  {
+    value: 'laptop',
+    label: 'Laptop',
+  },
+  {
+    value: 'fan',
+    label: 'Fan',
+  },
+  {
+    value: 'ac',
+    label: 'Ac',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+  },
+];
+// const madeof = [
+//   {
+//     value: 'wood',
+//     label: 'Wood',
+//   },
+//   {
+//     value: 'palstic',
+//     label: 'Plastic',
+//   },
+//   {
+//     value: 'metal',
+//     label: 'Metal',
+//   },
+//   {
+//     value: 'other',
+//     label: 'Other',
+//   },
+// ];
+
+
+const ElectronicForm = () => {
+  const theme = useTheme();
+  const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const colors = tokens(theme.palette.mode);
+  const navigate=useNavigate();
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = (values) => {
+    navigate("/furniture");
   };
 
   return (
     <Box m="20px">
-      <Header title="ELECTRONICS" subtitle="Add New Electronic Item" />
+      <Header title="ADD ELECTRONICS" />
 
-      <Form
-        onSubmit={handleFormSubmit}
+      <Formik
+        onSubmit={handleSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
       >
@@ -28,6 +77,7 @@ const MyForm = () => {
           errors,
           touched,
           handleBlur,
+          setFieldValue,
           handleChange,
           handleSubmit,
         }) => (
@@ -44,15 +94,49 @@ const MyForm = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Type"
+                label="Electronic code"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.type}
-                name="type"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.ecode}
+                name="ecode"
+                error={!!touched.fcode && !!errors.fcode}
+                helperText={touched.fcode && errors.fcode}
                 sx={{ gridColumn: "span 2" }}
               />
+              <TextField
+                id="filled-select-currency"
+                select
+                label="Select"
+                defaultValue="Laptop"
+                value={values.etype}
+                name="etype"
+                helperText="Please select electronic type"
+                variant="filled"
+                sx={{ gridColumn: "span 2" }}
+              >
+                {type.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              {/* <TextField
+                id="filled-select-currency"
+                select
+                label="Select"
+                defaultValue=""
+                value={values.madeof}
+                name="madeof"
+                helperText="Please select furniture material"
+                variant="filled"
+                sx={{ gridColumn: "span 2" }}
+              >
+                {madeof.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))} 
+              </TextField>              */}
               <TextField
                 fullWidth
                 variant="filled"
@@ -61,10 +145,10 @@ const MyForm = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.brandname}
-                name="brandname"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
+                name="bradname"
+                error={!!touched.expense && !!errors.expense}
+                helperText={touched.expense && errors.expense}
+                sx={{ gridColumn: "span 1" }}
               />
                <TextField
                 fullWidth
@@ -75,24 +159,25 @@ const MyForm = () => {
                 onChange={handleChange}
                 value={values.modelname}
                 name="modelname"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 2" }}
+                error={!!touched.expense && !!errors.expense}
+                helperText={touched.expense && errors.expense}
+                sx={{ gridColumn: "span 1" }}
               />
+              
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Installed Date"
+                label="Date of Purchase (DD/MM/YYYY)"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.installeddate}
-                name="installeddate"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
+                value={values.idate}
+                name="idate"
+                error={!!touched.idate && !!errors.idate}
+                helperText={touched.idate && errors.idate}
+                sx={{ gridColumn: "span 1" }}
               />
-              <TextField
+               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -101,55 +186,73 @@ const MyForm = () => {
                 onChange={handleChange}
                 value={values.expense}
                 name="expense"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 2" }}
+                error={!!touched.expense && !!errors.expense}
+                helperText={touched.expense && errors.expense}
+                sx={{ gridColumn: "span 1" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Status"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.status}
-                name="status"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 2" }}
-              />
-             
+            </Box>
+            <Box
+              gridColumn="span 4"
+              border={`1px solid ${palette.neutral.any}`}
+              borderRadius="5px"
+              p="1rem"
+            >
+              <Dropzone
+                acceptedFiles=".jpg,.jpeg,.png,.pdf,.doc"
+                multiple={false}
+                onDrop={(acceptedFiles) =>
+                  setFieldValue("picture", acceptedFiles[0])
+                }
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <Box
+                    {...getRootProps()}
+                    border={`2px dashed ${palette.secondary.main}`}
+                    p="1rem"
+                    sx={{ "&:hover": { cursor: "pointer" } }}
+                  >
+                    <input {...getInputProps()} />
+                    {!values.picture ? (
+                      <p>Upload Purchase invoice</p>
+                    ) : (
+                      <FlexBetween>
+                        <Typography>{values.picture.name}</Typography>
+                        <EditOutlinedIcon />
+                      </FlexBetween>
+                    )}
+                  </Box>
+                )}
+              </Dropzone>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
+            <FormControlLabel control={<Switch defaultChecked color="secondary"/>}  label="Active or Not" />
               <Button type="submit" color="secondary" variant="contained">
-                Add New Item
+                ADD
               </Button>
             </Box>
           </form>
         )}
-      </Form>
+      </Formik>
     </Box>
   );
 };
 
-// const phoneRegExp =
-//   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  type: yup.string().required("required"),
-  brandname: yup.string().required("required"),
-  modelname: yup.string().required("required"),
-  installeddate: yup.string().required("required"),
+  ecode: yup.string().required("required"),
+  //ftype: yup.string().required("required"),
+  //madeof: yup.string().required("required"),
+  idate: yup.string().required("required"),
   expense: yup.string().required("required"),
-  status: yup.string().required("required"),
 });
 const initialValues = {
-  type: "",
+  ecode: "",
+  etype: "",
   brandname: "",
   modelname: "",
-  installeddate: "",
+  idate: "",
   expense: "",
-  status: "",
+  picture:""
 };
 
-export default MyForm;
+export default ElectronicForm;

@@ -1,83 +1,78 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataElectronic } from "../../data/mockData";
+import { mockDataAutomotive } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-import { Button, IconButton, Typography } from "@mui/material";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import { Link, Route, Routes } from "react-router-dom";
-import MyForm from "../electronicform";
-const Electronic = () => {
+import {  Button, IconButton, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
+const   Electronic = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate=useNavigate();
+  const handleChange = () => {
+    navigate("/electronics/addelectronics");
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "type", headerName: "Type", flex: 1 },
+    { field: "type", headerName: "Type",flex:1 },
     {
-      field: "brand",
+      field: "brandname",
       headerName: "Brand Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "model",
+      field: "modelname",
       headerName: "Model Name",
-      flex: 1,
-    },
-    {
-      field: "installeddate",
-      headerName: "Installed Date",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "expense",
-      headerName: "Expense",
+      field: "installeddate",
+      headerName: "Installed Date",
       flex: 1,
     },
     {
+      field: "expense",
+      headerName: "Expense",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
       field: "status",
-      headerName: "status",
-      flex: 1,
+      headerName: "Status",
+      headerAlign: "left",
+      align: "left",
     },
   ];
 
   return (
     <Box m="20px">
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      ></Box>
+    <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
       <Header
-        title="ELECTRONICS"
-        subtitle="List of Electronics for Future Reference"
+        title="ELECTRONIC"
       />
       <Box>
-        <Link to="/electronicform">
-          <Button 
+          <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
               color: colors.grey[100],
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
-              position: "absolute",
-              right: 20,
-              top: 150,
-              
+              position : "absolute",
+              right : 20,
+              top : 100, 
             }}
+            onClick={handleChange}
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            <AddIcon sx={{ mr: "10px" }} />
             ADD
           </Button>
-        </Link>
-        <Routes>
-          <Route path="/electronicform" element={<MyForm />} />
-        </Routes>
-      </Box>
+        </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -111,7 +106,7 @@ const Electronic = () => {
         }}
       >
         <DataGrid
-          rows={mockDataElectronic}
+          rows={mockDataAutomotive}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
