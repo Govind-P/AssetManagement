@@ -6,13 +6,17 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Header from "../../components/Header";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import React, { useState } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+
 
 const type = [
   {
@@ -38,7 +42,7 @@ const madeof = [
     label: 'Wood',
   },
   {
-    value: 'palstic',
+    value: 'plastic',
     label: 'Plastic',
   },
   {
@@ -58,6 +62,11 @@ const FurnitureForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleSubmit = (values) => {
     navigate("/furniture");
@@ -128,18 +137,18 @@ const FurnitureForm = () => {
                 value={values.madeof}
                 name="madeof"
                 helperText="Please select furniture material"
-                variant="filled"
+                variant="outlined"
                 sx={{ gridColumn: "span 2" }}
               >
                 {madeof.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                    {option.value}
                   </MenuItem>
                 ))} 
               </TextField>             
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Expense"
                 onBlur={handleBlur}
@@ -150,19 +159,13 @@ const FurnitureForm = () => {
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Date of Purchase (DD/MM/YYYY)"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.idate}
-                name="idate"
-                error={!!touched.idate && !!errors.idate}
-                helperText={touched.idate && errors.idate}
-                sx={{ gridColumn: "span 1" }}
+              <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+              <DatePicker
+                label="Select Date"
+                value={selectedDate}
+                onChange={handleDateChange}
               />
+              </LocalizationProvider>
             </Box>
             <Box
               gridColumn="span 4"

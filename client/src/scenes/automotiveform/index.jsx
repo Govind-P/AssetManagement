@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import React,{ useState} from 'react';
 

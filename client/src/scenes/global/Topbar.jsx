@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import InputBase from "@mui/material/InputBase";
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -43,10 +43,12 @@ const Topbar = () => {
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* SEARCH BAR */}
       <Box
-        display="flex"
-        backgroundColor={colors.primary[400]}
+        display="flex" 
         borderRadius="3px"
       >
+        <Typography variant="h2" color={colors.redAccent[700]} fontWeight="bold" component="div" >
+            COLLEGE OF ENGINEERING TRIVANDRUM
+        </Typography>
         {/*<InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
