@@ -40,9 +40,8 @@ export default function LoginIn() {
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
-    console.log(loggedIn.msg);
     if (loggedInResponse.ok) {
-      dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
+      dispatch(setLogin({ user: loggedIn.officers.buildingname, token: loggedIn.token }));
       navigate("/dashboard");
     }
     else{

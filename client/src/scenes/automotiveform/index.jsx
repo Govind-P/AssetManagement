@@ -3,20 +3,15 @@ import { tokens } from "../../theme";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Header from "../../components/Header";
-//import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Switch from '@mui/material/Switch';
-import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import 'react-datepicker/dist/react-datepicker.css';
 import React,{ useState} from 'react';
 
-import 'react-datepicker/dist/react-datepicker.css';
 
 
 const AutomotiveForm = () => {

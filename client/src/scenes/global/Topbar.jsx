@@ -12,6 +12,7 @@ import { setLogin } from "../../state";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import KeyIcon from '@mui/icons-material/Key';
+import { useSelector } from "react-redux";
 
 const Topbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -21,6 +22,8 @@ const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
+  const titles=useSelector((state) => state.user);
+  
 
   const handleLogout = () => {
     dispatch(setLogin({ user: null, token: null }));
@@ -47,7 +50,7 @@ const Topbar = () => {
         borderRadius="3px"
       >
         <Typography variant="h2" color={colors.redAccent[700]} fontWeight="bold" component="div" >
-            COLLEGE OF ENGINEERING TRIVANDRUM
+            {titles}
         </Typography>
         {/*<InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
