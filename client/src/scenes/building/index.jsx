@@ -4,9 +4,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header1 from "../../components/Header";
+import { useSelector } from "react-redux";
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
+  const titles=useSelector((state) => state.user);
   const handleFormSubmit = (values) => {
     console.log(values);
   };
@@ -42,65 +43,60 @@ const Form = () => {
                 variant="outlined"
                 type="text"
                 label="Building Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="College Of Engineering Trivandrum"
-                //value={values.firstName}
+                value={titles.buildingname}
                 name="buildingname"
-               // error={!!touched.buildingname && !!errors.buildingname}
-               // helperText={touched.buildingname && errors.buildingname}
-                sx={{ gridColumn: "span 4" }} 
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{ gridColumn: "span 2" }} 
               />
               <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
                 label="Building Code"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="1234"
-                //value={values.lastName}
+                value={titles.buildingcode}
+                InputProps={{
+                  readOnly: true,
+                }}
                 name="buildingcode"
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               />
                 <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
+                value={titles.buildingtype}
+                InputProps={{
+                  readOnly: true,
+                }}
                 label="Building Type"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="College"
-                //value={values.lastName}
                 name="buildingtype"
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               />
               <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
                 label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="cet@gmail.com"
-                //value={values.buildingtype}
+                value={titles.email}
+                InputProps={{
+                  readOnly: true,
+                }}
                 name="email"
-                helperText={touched.email }
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
              
               <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
+                value={titles.district}
+                InputProps={{
+                  readOnly: true,
+                }}
                 label="District"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Trivandrum"
-               // value={values.district}
                 name="district"
-               // error={!!touched.district && !!errors.district}
-             //   helperText={touched.district && errors.district}
                 sx={{ gridColumn: "span 2" }}
               />
                <TextField
@@ -108,26 +104,23 @@ const Form = () => {
                 variant="outlined"
                 type="text"
                 label="Muncipality/corporation/panchayat"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Sreekaryam"
-               // value={values.district}
+                value={titles.mpc}
+                InputProps={{
+                  readOnly: true,
+                }}
                 name="mcp"
-              //  helperText={touched.mcp && errors.mcp}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
-                label="PostOffice"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Sreekaryam"
-               // value={values.postoffice}
+                label="Post Office"
+                value={titles.postoffice}
+                InputProps={{
+                  readOnly: true,
+                }}
                 name="postoffice"
-                //error={!!touched.postoffice && !!errors.postoffice}
-              //  helperText={touched.postoffice && errors.postoffice}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -135,37 +128,42 @@ const Form = () => {
                 variant="outlined"
                 type="text"
                 label="Pincode"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="670621"
-                //value={values.pincode}
                 name="pincode"
-               // error={!!touched.pincode && !!errors.pincode}
-              //  helperText={touched.pincode && errors.pincode}
-                sx={{ gridColumn: "span 2" }}
+                value={titles.pincode}
+                InputProps={{
+                  readOnly: true,
+                }}
+                sx={{ gridColumn: "span 1" }}
               />
-               <TextField
+              <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
                 label="Locality"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value="Chavadumukku"
-                //value={values.locality}
+                value={titles.locality}
+                InputProps={{
+                  readOnly: true,
+                }}
                 name="locality"
-               // error={!!touched.locality && !!errors.locality}
-              //  helperText={touched.locality && errors.locality}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
-                 <TextField
+              <TextField
+                fullWidth
+                variant="outlined"
+                type="integer"
+                label="Ward"
+                value={titles.ward}
+                InputProps={{
+                  readOnly: true,
+                }}
+                name="ward"
+                sx={{ gridColumn: "span 1" }}
+              />
+              <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
                 label="Year"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.year}
                 name="year"
                // error={!!touched.year && !!errors.year}
               //  helperText={touched.year && errors.year}

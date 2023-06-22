@@ -22,7 +22,7 @@ const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const titles=useSelector((state) => state.user);
+  const titles=useSelector((state) => state.user.buildingname);
   
 
   const handleLogout = () => {

@@ -41,7 +41,7 @@ export default function LoginIn() {
     });
     const loggedIn = await loggedInResponse.json();
     if (loggedInResponse.ok) {
-      dispatch(setLogin({ user: loggedIn.officers.buildingname, token: loggedIn.token }));
+      dispatch(setLogin({ user: loggedIn.officers, token: loggedIn.token }));
       navigate("/dashboard");
     }
     else{
