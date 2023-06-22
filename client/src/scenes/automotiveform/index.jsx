@@ -11,7 +11,9 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import React,{ useState} from 'react';
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 
 
 const AutomotiveForm = () => {
@@ -20,6 +22,11 @@ const AutomotiveForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const handleSubmit = (values) => {
     navigate("/automotive");
@@ -54,7 +61,7 @@ const AutomotiveForm = () => {
             >
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Vehicle No"
                 onBlur={handleBlur}
@@ -67,7 +74,7 @@ const AutomotiveForm = () => {
             />
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Vehicle Model"
                 onBlur={handleBlur}
@@ -80,7 +87,7 @@ const AutomotiveForm = () => {
             />
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Chassis Number"
                 onBlur={handleBlur}
@@ -93,7 +100,7 @@ const AutomotiveForm = () => {
             />
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Vehicle Color"
                 onBlur={handleBlur}
@@ -106,7 +113,7 @@ const AutomotiveForm = () => {
             />
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Fuel Type"
                 onBlur={handleBlur}
@@ -119,7 +126,7 @@ const AutomotiveForm = () => {
             />
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Expense"
                 onBlur={handleBlur}
@@ -130,7 +137,13 @@ const AutomotiveForm = () => {
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
             />
-         
+         <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+              <DatePicker
+                label="Select Date"
+                value={selectedDate}
+                onChange={handleDateChange}
+              />
+              </LocalizationProvider>
             
             </Box>
             <Box
@@ -200,7 +213,7 @@ const AutomotiveForm = () => {
               </Dropzone>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-            <FormControlLabel control={<Switch defaultChecked color="secondary"/>}  label="Active or Not" />
+            
               <Button type="submit" color="secondary" variant="contained">
                 ADD
               </Button>

@@ -6,13 +6,16 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Header from "../../components/Header";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import React, { useState } from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
 const type = [
   {
@@ -62,10 +65,15 @@ const ElectronicForm = () => {
   const handleSubmit = (values) => {
     navigate("/furniture");
   };
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <Box m="20px">
-      <Header title="ADD ELECTRONICS" />
+      <Header title="ADD DEVICE" />
 
       <Formik
         onSubmit={handleSubmit}
@@ -92,9 +100,9 @@ const ElectronicForm = () => {
             >
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
-                label="Electronic code"
+                label="Device code"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.ecode}
@@ -106,13 +114,14 @@ const ElectronicForm = () => {
               <TextField
                 id="filled-select-currency"
                 select
-                label="Select"
+                label="Select Device"
                 defaultValue="Laptop"
                 value={values.etype}
                 name="etype"
-                helperText="Please select electronic type"
-                variant="filled"
+                helperText="Please select device type"
+                variant="outlined"
                 sx={{ gridColumn: "span 2" }}
+                onChange={handleChange}
               >
                 {type.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -120,26 +129,10 @@ const ElectronicForm = () => {
                   </MenuItem>
                 ))}
               </TextField>
-              {/* <TextField
-                id="filled-select-currency"
-                select
-                label="Select"
-                defaultValue=""
-                value={values.madeof}
-                name="madeof"
-                helperText="Please select furniture material"
-                variant="filled"
-                sx={{ gridColumn: "span 2" }}
-              >
-                {madeof.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))} 
-              </TextField>              */}
+             
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Brand Name"
                 onBlur={handleBlur}
@@ -152,7 +145,7 @@ const ElectronicForm = () => {
               />
                <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Model Name"
                 onBlur={handleBlur}
@@ -164,22 +157,17 @@ const ElectronicForm = () => {
                 sx={{ gridColumn: "span 1" }}
               />
               
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Date of Purchase (DD/MM/YYYY)"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.idate}
-                name="idate"
-                error={!!touched.idate && !!errors.idate}
-                helperText={touched.idate && errors.idate}
-                sx={{ gridColumn: "span 1" }}
+           
+              <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+              <DatePicker
+                label="Date of Purchase"
+                value={selectedDate}
+                onChange={handleDateChange}
               />
+              </LocalizationProvider>
                <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Expense"
                 onBlur={handleBlur}
@@ -225,7 +213,7 @@ const ElectronicForm = () => {
               </Dropzone>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-            <FormControlLabel control={<Switch defaultChecked color="secondary"/>}  label="Active or Not" />
+            
               <Button type="submit" color="secondary" variant="contained">
                 ADD
               </Button>

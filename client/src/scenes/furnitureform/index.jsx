@@ -115,7 +115,7 @@ const FurnitureForm = () => {
               <TextField
                 id="filled-select-currency"
                 select
-                label="Select"
+                label="Select "
                 defaultValue="table"
                 value={values.ftype}
                 name="ftype"
@@ -139,6 +139,7 @@ const FurnitureForm = () => {
                 helperText="Please select furniture material"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
+                onChange={handleChange}
               >
                 {madeof.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -161,7 +162,7 @@ const FurnitureForm = () => {
               />
               <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
               <DatePicker
-                label="Select Date"
+                label="Date of Purchase"
                 value={selectedDate}
                 onChange={handleDateChange}
               />
@@ -201,7 +202,7 @@ const FurnitureForm = () => {
               </Dropzone>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-            <FormControlLabel control={<Switch defaultChecked color="secondary"/>}  label="Active or Not" />
+            
               <Button type="submit" color="secondary" variant="contained">
                 ADD
               </Button>

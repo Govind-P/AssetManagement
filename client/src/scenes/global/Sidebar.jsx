@@ -152,13 +152,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Income/Expense"
               to="/invoices"
               icon={<CurrencyRupeeIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Typography
               variant="h6"
@@ -211,7 +211,7 @@ const Sidebar = () => {
             />
             <Item
               title="History"
-              to="/invoices"
+             // to="/invoices"
               icon={<HistoryIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -227,7 +227,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Services"
-              to="/faq"
+              to=""
               icon={<SettingsAccessibilityIcon />}
               selected={selected}
               setSelected={setSelected}

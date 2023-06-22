@@ -10,7 +10,9 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers";
-
+import React,{ useState} from 'react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 const EmployeeForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate=useNavigate();
@@ -19,6 +21,12 @@ const EmployeeForm = () => {
   const handleFormSubmit = (values) => {
     navigate("/employee");
   };
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
 
   return (
     <Box m="20px">
@@ -49,7 +57,7 @@ const EmployeeForm = () => {
             >
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="First Name"
                 onBlur={handleBlur}
@@ -62,7 +70,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Last Name"
                 onBlur={handleBlur}
@@ -75,7 +83,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Employee ID"
                 onBlur={handleBlur}
@@ -86,7 +94,7 @@ const EmployeeForm = () => {
                 helperText={touched.dob && errors.dob}
                 sx={{ gridColumn: "span 1" }}
               />
-              <TextField
+              {/* <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -98,10 +106,19 @@ const EmployeeForm = () => {
                 error={!!touched.dob && !!errors.dob}
                 helperText={touched.dob && errors.dob}
                 sx={{ gridColumn: "span 1" }}
+              /> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+              <DatePicker
+                label="DOB(DD/MM/YYYY)"
+                value={selectedDate}
+                onChange={handleDateChange}
+                
               />
+              </LocalizationProvider>
+            
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Age"
                 onBlur={handleBlur}
@@ -114,7 +131,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Email"
                 onBlur={handleBlur}
@@ -127,7 +144,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Contact Number"
                 onBlur={handleBlur}
@@ -140,7 +157,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Address"
                 onBlur={handleBlur}
@@ -153,7 +170,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="password"
                 label="Profile Password"
                 onBlur={handleBlur}
@@ -166,7 +183,7 @@ const EmployeeForm = () => {
               />
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="password"
                 label="Confirm Password"
                 onBlur={handleBlur}
@@ -177,7 +194,7 @@ const EmployeeForm = () => {
                 helperText={touched.cpassword && errors.cpassword}
                 sx={{ gridColumn: "span 1" }}
               />
-              <TextField
+              {/* <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -189,10 +206,18 @@ const EmployeeForm = () => {
                 error={!!touched.joindate && !!errors.joindate}
                 helperText={touched.joindate && errors.joindate}
                 sx={{ gridColumn: "span 1" }}
+              /> */}
+              <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+              <DatePicker
+                label="Joining Date"
+                value={selectedDate}
+                onChange={handleDateChange}
               />
+              </LocalizationProvider>
+            
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Position"
                 onBlur={handleBlur}
