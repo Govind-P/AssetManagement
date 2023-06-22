@@ -6,13 +6,19 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Header from "../../components/Header";
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+//import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Switch from '@mui/material/Switch';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import React,{ useState} from 'react';
+
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const AutomotiveForm = () => {
   const theme = useTheme();
@@ -24,7 +30,7 @@ const AutomotiveForm = () => {
   const handleSubmit = (values) => {
     navigate("/automotive");
   };
-
+ 
   return (
     <Box m="20px">
       <Header title="ADD AUTOMOTIVE" />
@@ -130,19 +136,8 @@ const AutomotiveForm = () => {
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
             />
-            <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Date of Purchase (DD/MM/YYYY)"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.idate}
-                name="idate"
-                error={!!touched.idate && !!errors.idate}
-                helperText={touched.idate && errors.idate}
-                sx={{ gridColumn: "span 1" }}
-            />
+         
+            
             </Box>
             <Box
               gridColumn="span 4"
