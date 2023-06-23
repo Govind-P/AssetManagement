@@ -24,7 +24,6 @@ const Topbar = () => {
   const colorMode = useContext(ColorModeContext);
   const titles=useSelector((state) => state.user.buildingname);
   
-  console.log(titles);
   const handleLogout = () => {
     dispatch(setLogin({ user: null, token: null }));
     navigate("/"); 
