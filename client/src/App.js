@@ -40,7 +40,7 @@ function App() {
         <div className="app">
         {(location.pathname !== "/"  && <Sidebar isSidebar={isSidebar} />) && (location.pathname !== "/register"  && <Sidebar isSidebar={isSidebar} />) }
         <main className="content">
-        {location.pathname !== "/"  && <Topbar setIsSidebar={setIsSidebar} />}
+        {(location.pathname !== "/"  && <Topbar setIsSidebar={setIsSidebar} />) && (location.pathname !== "/register"  && <Topbar setIsSidebar={setIsSidebar} />)}
             <Routes>
               <Route path="/" element={!isAuth ? <LoginPage /> : <Navigate to="/dashboard"/>} />
               <Route
