@@ -16,6 +16,8 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import React, { useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { useSelector } from "react-redux";
+import { setLogin } from "../../state";
 
 const type = [
   {
@@ -35,25 +37,6 @@ const type = [
     label: 'Other',
   },
 ];
-// const madeof = [
-//   {
-//     value: 'wood',
-//     label: 'Wood',
-//   },
-//   {
-//     value: 'palstic',
-//     label: 'Plastic',
-//   },
-//   {
-//     value: 'metal',
-//     label: 'Metal',
-//   },
-//   {
-//     value: 'other',
-//     label: 'Other',
-//   },
-// ];
-
 
 const ElectronicForm = () => {
   const theme = useTheme();
@@ -61,14 +44,61 @@ const ElectronicForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
-
+  const build = (useSelector((state) => state.user));
+  const [values, setFormData] = useState({
+    buildingcode:'',
+    devicecode:'',
+    devicetype:'',
+    devicebrand:'',
+    devicemodel:'',
+    installeddate:'',
+    expense:'',
+    status:'',
+    invoice:'',
+  });
   const handleSubmit = (values) => {
-    navigate("/furniture");
+    values.buildingcode = build.buildingcode;
+    values.status = 'Active'; 
+    const reg=fetch('http://localhost:3001/adddevice', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (response.status !== 201)
+          throw response;
+        return response.json()
+      }).then(data => {
+        alert("Added successfully");
+        navigate("/electronics");
+        setFormData({
+          devicecode:'',
+          devicetype:'',
+          devicebrand:'',
+          devicemodel:'',
+          installeddate:'',
+          expense:'',
+          invoice:'',
+        });
+    })
+      .catch((error) => {
+        alert("Please fill all fields");
+        console.error(error);
+      });
   };
   const [selectedDate, setSelectedDate] = useState(null);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    values.installeddate=date;
+    
+  };
+  const handleChange = (values) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [values.target.name]: values.target.value,
+    }));
   };
 
   return (
@@ -78,7 +108,7 @@ const ElectronicForm = () => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        // validationSchema={checkoutSchema}
       >
         {({
           values,
@@ -105,8 +135,8 @@ const ElectronicForm = () => {
                 label="Device code"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.ecode}
-                name="ecode"
+                value={values.devicecode}
+                name="devicecode"
                 error={!!touched.fcode && !!errors.fcode}
                 helperText={touched.fcode && errors.fcode}
                 sx={{ gridColumn: "span 2" }}
@@ -116,8 +146,8 @@ const ElectronicForm = () => {
                 select
                 label="Select Device"
                 defaultValue="Laptop"
-                value={values.etype}
-                name="etype"
+                value={values.devicetype}
+                name="devicetype"
                 helperText="Please select device type"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
@@ -129,7 +159,6 @@ const ElectronicForm = () => {
                   </MenuItem>
                 ))}
               </TextField>
-             
               <TextField
                 fullWidth
                 variant="outlined"
@@ -137,10 +166,10 @@ const ElectronicForm = () => {
                 label="Brand Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.brandname}
-                name="bradname"
-                error={!!touched.expense && !!errors.expense}
-                helperText={touched.expense && errors.expense}
+                value={values.devicebrand}
+                name="devicebrand"
+                error={!!touched.brandname && !!errors.brandname}
+                helperText={touched.brandname && errors.brandname}
                 sx={{ gridColumn: "span 1" }}
               />
                <TextField
@@ -150,19 +179,19 @@ const ElectronicForm = () => {
                 label="Model Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.modelname}
-                name="modelname"
-                error={!!touched.expense && !!errors.expense}
-                helperText={touched.expense && errors.expense}
+                value={values.devicemodel}
+                name="devicemodel"
+               // error={!!touched.expense && !!errors.expense}
+               // helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
               />
-              
-           
               <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
               <DatePicker
                 label="Date of Purchase"
-                value={selectedDate}
-                onChange={handleDateChange}
+                value={values.installeddate}
+                onChange={(value) => {setFieldValue("installeddate", value.format("YYYY-MM-DD").toString(), true);
+                }}
+                name="installeddate"
               />
               </LocalizationProvider>
                <TextField
@@ -228,19 +257,17 @@ const ElectronicForm = () => {
 
 const checkoutSchema = yup.object().shape({
   ecode: yup.string().required("required"),
-  //ftype: yup.string().required("required"),
-  //madeof: yup.string().required("required"),
   idate: yup.string().required("required"),
   expense: yup.string().required("required"),
 });
 const initialValues = {
-  ecode: "",
-  etype: "",
-  brandname: "",
-  modelname: "",
-  idate: "",
-  expense: "",
-  picture:""
+  devicecode:"",
+  devicetype:"",
+  devicebrand:"",
+  devicemodel:"",
+  installeddate:"",
+  expense:"",
+  invoice:"",
 };
 
 export default ElectronicForm;

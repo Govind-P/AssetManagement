@@ -1,6 +1,6 @@
-import officer from '../models/device.js'; 
+import furniture from '../models/furniture.js'; 
 
-export const deviceregister=async(req, res) =>{
+export const furnitureregister=async(req, res) =>{
     try{
         const{
             buildingcode,

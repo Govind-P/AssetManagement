@@ -14,6 +14,7 @@ import React,{ useState} from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { useSelector } from "react-redux";
 
 
 const AutomotiveForm = () => {
@@ -22,16 +23,65 @@ const AutomotiveForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
+  const build = (useSelector((state) => state.user));
+  const [values, setFormData] = useState({
+    buildingcode:'',
+    vehicleno:'',
+    vehiclemodel:'',
+    chassisnumber:'',
+    vehiclecolor:'',
+    fueltype:'',
+    expense:'',
+    pdate:'',
+    status:'',
+    invoice:'',
+    image:'',
+  });
+  const handleSubmit = (values) => {
+    values.buildingcode = build.buildingcode;
+    values.status = 'Active'; 
+    const reg=fetch('http://localhost:3001/addautomotive', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (response.status !== 201)
+          throw response;
+        return response.json()
+      }).then(data => {
+        alert("Added successfully");
+        navigate("/automotive");
+        setFormData({
+          vehicleno:'',
+          vehiclemodel:'',
+          chassisnumber:'',
+          vehiclecolor:'',
+          fueltype:'',
+          expense:'',
+          pdate:'',
+          invoice:'',
+          image:'',
+        });
+    })
+      .catch((error) => {
+        alert("Please fill all fields");
+        console.error(error);
+      });
+  };
   const [selectedDate, setSelectedDate] = useState(null);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    values.installeddate=date;
   };
-
-  const handleSubmit = (values) => {
-    navigate("/automotive");
+  const handleChange = (values) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [values.target.name]: values.target.value,
+    }));
   };
- 
   return (
     <Box m="20px">
       <Header title="ADD AUTOMOTIVE" />
@@ -39,7 +89,7 @@ const AutomotiveForm = () => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        //validationSchema={checkoutSchema}
       >
         {({
           values,
@@ -79,10 +129,10 @@ const AutomotiveForm = () => {
                 label="Vehicle Model"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.model}
-                name="model"
-                error={!!touched.model && !!errors.model}
-                helperText={touched.model && errors.model}
+                value={values.vehiclemodel}
+                name="vehiclemodel"
+               // error={!!touched.model && !!errors.model}
+               // helperText={touched.model && errors.model}
                 sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -92,10 +142,10 @@ const AutomotiveForm = () => {
                 label="Chassis Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.cno}
-                name="cno"
-                error={!!touched.cno && !!errors.cno}
-                helperText={touched.cno && errors.cno}
+                value={values.chassisnumber}
+                name="chassisnumber"
+                error={!!touched.chassisnumber && !!errors.chassisnumber}
+                helperText={touched.chassisnumber && errors.chassisnumber}
                 sx={{ gridColumn: "span 1" }}
             />
             <TextField
@@ -105,10 +155,10 @@ const AutomotiveForm = () => {
                 label="Vehicle Color"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.color}
-                name="color"
-                error={!!touched.color && !!errors.color}
-                helperText={touched.color && errors.color}
+                value={values.vehiclecolor}
+                name="vehiclecolor"
+                //error={!!touched.color && !!errors.color}
+                //helperText={touched.color && errors.color}
                 sx={{ gridColumn: "span 1" }}
             />
             <TextField
@@ -120,8 +170,8 @@ const AutomotiveForm = () => {
                 onChange={handleChange}
                 value={values.fueltype}
                 name="fueltype"
-                error={!!touched.fueltype && !!errors.fueltype}
-                helperText={touched.fueltype && errors.fueltype}
+                //error={!!touched.fueltype && !!errors.fueltype}
+                //helperText={touched.fueltype && errors.fueltype}
                 sx={{ gridColumn: "span 1" }}
             />
             <TextField
@@ -137,13 +187,15 @@ const AutomotiveForm = () => {
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
             />
-         <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
               <DatePicker
                 label="Select Date"
                 value={selectedDate}
-                onChange={handleDateChange}
+                onChange={(value) => {setFieldValue("pdate", value.format("YYYY-MM-DD").toString(), true);
+                }}
+                name="pdate"
               />
-              </LocalizationProvider>
+            </LocalizationProvider>
             
             </Box>
             <Box
@@ -156,7 +208,7 @@ const AutomotiveForm = () => {
                 acceptedFiles=".jpg,.jpeg,.png"
                 multiple={false}
                 onDrop={(acceptedFiles) =>
-                  setFieldValue("bill", acceptedFiles[0])
+                  setFieldValue("invoice", acceptedFiles[0])
                 }
               >
                 {({ getRootProps, getInputProps }) => (
@@ -167,11 +219,11 @@ const AutomotiveForm = () => {
                     sx={{ "&:hover": { cursor: "pointer" } }}
                   >
                     <input {...getInputProps()} />
-                    {!values.bill ? (
+                    {!values.invoice ? (
                       <p>Upload Purchase invoice</p>
                     ) : (
                       <FlexBetween>
-                        <Typography>{values.bill.name}</Typography>
+                        <Typography>{values.invoice.name}</Typography>
                         <EditOutlinedIcon />
                       </FlexBetween>
                     )}
@@ -189,7 +241,7 @@ const AutomotiveForm = () => {
                 acceptedFiles=".jpg,.jpeg,.png,.pdf,.doc"
                 multiple={false}
                 onDrop={(acceptedFiles) =>
-                  setFieldValue("picture", acceptedFiles[0])
+                  setFieldValue("image", acceptedFiles[0])
                 }
               >
                 {({ getRootProps, getInputProps }) => (
@@ -200,11 +252,11 @@ const AutomotiveForm = () => {
                     sx={{ "&:hover": { cursor: "pointer" } }}
                   >
                     <input {...getInputProps()} />
-                    {!values.picture ? (
+                    {!values.image ? (
                       <p>Upload Automotive Image with Vehicle number visible</p>
                     ) : (
                       <FlexBetween>
-                        <Typography>{values.picture.name}</Typography>
+                        <Typography>{values.image.name}</Typography>
                         <EditOutlinedIcon />
                       </FlexBetween>
                     )}
@@ -228,22 +280,19 @@ const AutomotiveForm = () => {
 
 const checkoutSchema = yup.object().shape({
   vehicleno: yup.string().required("required"),
-  model: yup.string().required("required"),
-  cno: yup.string().required("required"),
   fueltype: yup.string().required("required"),
-  color: yup.string().required("required"),
-  idate: yup.string().required("required"),
   expense: yup.string().required("required"),
 });
 const initialValues = {
-  vehicleno: "",
-  model:"",
-  fueltype: "",
-  cno:"",
-  color: "",
-  idate: "",
-  status:"",
-  expense: "",
+  vehicleno:'',
+  vehiclemodel:'',
+  chassisnumber:'',
+  vehiclecolor:'',
+  fueltype:'',
+  expense:'',
+  pdate:'',
+  invoice:'',
+  image:'',
 };
 
 export default AutomotiveForm;

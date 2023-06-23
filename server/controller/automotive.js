@@ -1,4 +1,4 @@
-import officer from '../models/automotive.js'; 
+import vehicle from '../models/automotive.js'; 
 
 export const vehicleregister=async(req, res) =>{
     try{
@@ -15,8 +15,8 @@ export const vehicleregister=async(req, res) =>{
             invoice,
             image,
         }=req.body;
-
-        const newDevice=new device({
+        console.log(req.body);
+        const newVehicle=new vehicle({
             buildingcode,
             vehicleno,
             vehiclemodel,
@@ -37,12 +37,13 @@ export const vehicleregister=async(req, res) =>{
 
 
 /*Read*/ 
-/*export const getDevice = async(req,res)=>{
+export const getVehicle = async(req,res)=>{
     try{
-        const {buildingcode}=req.params;
-        const devices = await device.findById(buildingcode);
-        res.status(200).json(devices);
+        const {buildingcode}=req.query;
+        const vehicles = await vehicle.find({ buildingcode: buildingcode });
+
+        res.status(200).json(vehicles);
     }catch(err){
         res.status(404).json({message: err.message});
     }
-}*/
+}

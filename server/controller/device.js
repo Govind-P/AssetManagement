@@ -1,6 +1,7 @@
-import officer from '../models/device.js'; 
+import device from '../models/device.js'; 
 
 export const deviceregister=async(req, res) =>{
+    //console.log(req.body)
     try{
         const{
             buildingcode,
@@ -33,12 +34,12 @@ export const deviceregister=async(req, res) =>{
 
 
 /*Read*/ 
-/*export const getDevice = async(req,res)=>{
+export const getDevice = async(req,res)=>{
     try{
-        const {buildingcode}=req.params;
-        const devices = await device.findById(buildingcode);
+        const {buildingcode}=req.query;
+        const devices = await device.find({ buildingcode: buildingcode });
         res.status(200).json(devices);
     }catch(err){
         res.status(404).json({message: err.message});
     }
-}*/
+}
