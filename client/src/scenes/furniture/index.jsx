@@ -17,23 +17,26 @@ const Furniture = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "type", headerName: "Type",flex:1 },
+    
     {
-      field: "regid",
-      headerName: "Register id",
+      field: "fcode",
+      headerName: "Furniture Code",
       flex: 1,
       cellClassName: "name-column--cell",
+    },
+    { field: "type", headerName: "Type",flex:1 },
+   
+    {
+      field: "expense",
+      headerName: "Expense",
+      flex: 1,
     },
     {
       field: "installeddate",
       headerName: "Installed Date",
       headerAlign: "left",
       align: "left",
-    },
-    {
-      field: "expense",
-      headerName: "Expense",
-      flex: 1,
+      flex:1
     },
     {
         field: "status",

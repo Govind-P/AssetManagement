@@ -101,7 +101,7 @@ const FurnitureForm = () => {
             >
               <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 type="text"
                 label="Furniture Code"
                 onBlur={handleBlur}
@@ -120,8 +120,9 @@ const FurnitureForm = () => {
                 value={values.ftype}
                 name="ftype"
                 helperText="Please select furniture type"
-                variant="filled"
+                variant="outlined"
                 sx={{ gridColumn: "span 2" }}
+                onChange={handleChange}
               >
                 {type.map((option) => (
                   <MenuItem key={option.value} value={option.value}>

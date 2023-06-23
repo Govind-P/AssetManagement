@@ -17,18 +17,26 @@ const   Electronic = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "type", headerName: "Type",flex:1 },
+    { field: "dcode", headerName: "Device Code",flex:1 },
+    {
+      field: "dtype",
+      headerName: "Device Type",
+      flex: 1,
+      cellClassName: "name-column--cell",
+    },
     {
       field: "brandname",
       headerName: "Brand Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
+
     {
       field: "modelname",
       headerName: "Model Name",
       headerAlign: "left",
       align: "left",
+      flex:1,
     },
     {
       field: "installeddate",
@@ -40,12 +48,14 @@ const   Electronic = () => {
       headerName: "Expense",
       headerAlign: "left",
       align: "left",
+      flex:1,
     },
     {
       field: "status",
       headerName: "Status",
       headerAlign: "left",
       align: "left",
+      flex:1,
     },
   ];
 

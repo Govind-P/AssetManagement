@@ -204,7 +204,7 @@ const Sidebar = () => {
             />
             <Item
               title="Request"
-              to="/team"
+              to="/request"
               icon={<TelegramIcon />}
               selected={selected}
               setSelected={setSelected}
