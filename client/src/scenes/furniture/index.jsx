@@ -7,7 +7,29 @@ import { useTheme } from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
 const Furniture = () => {
+  const build = (useSelector((state) => state.user));
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/furniture?buildingcode='+build.buildingcode);
+        if (response.ok) {
+          const jsonData = await response.json();
+          const formattedData = jsonData.map((item, index) => ({ ...item, id: index + 1 }));
+          setData(formattedData);
+        } else {
+          console.error('Error:', response.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
@@ -19,21 +41,20 @@ const Furniture = () => {
     { field: "id", headerName: "ID", flex: 0.01 },
     
     {
-      field: "fcode",
+      field: "furniturecode",
       headerName: "Furniture Code",
       flex: 1,
       cellClassName: "name-column--cell",
     },
-    { field: "type", headerName: "Type",flex:1 },
-   
+    { field: "furnituretype", headerName: "Type",flex:1 },
     {
       field: "expense",
       headerName: "Expense",
       flex: 1,
     },
     {
-      field: "installeddate",
-      headerName: "Installed Date",
+      field: "purchasedate",
+      headerName: "Purchase Date",
       headerAlign: "left",
       align: "left",
       flex:1
@@ -104,7 +125,7 @@ const Furniture = () => {
         }}
       >
         <DataGrid
-          rows={mockDataFurniture}
+          rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
