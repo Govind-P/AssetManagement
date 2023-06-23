@@ -32,9 +32,9 @@ const categoryOptions = [
   },
 ];
 const itemOptions = {
-  electronic: ["Laptop", "Fan", "AC","Others"],
-  furniture: ["Chair", "Table", "Bench","Dusk","Others"],
-  automotive: ["Car", "Bike", "Bus","Jeep","Others"],
+  electronic: ["Laptop", "Fan", "AC", "Others"],
+  furniture: ["Chair", "Table", "Bench", "Dusk", "Others"],
+  automotive: ["Car", "Bike", "Bus", "Jeep", "Others"],
   building: ["House", "Office", "Store"],
 };
 
@@ -99,46 +99,44 @@ const RequestForm = () => {
                 ))}
               </TextField>
               {selectedCategory !== "building" && (
-              <TextField
-                id="filled-select-currency"
-                select
-                label="Item"
-                defaultValue=""
-                value={values.madeof}
-                name="madeof"
-                helperText="Please select an item"
-                variant="outlined"
-                sx={{ gridColumn: "span 2" }}
-                onChange={handleChange}
-              >
-                {itemOptions[selectedCategory]?.map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
+                <TextField
+                  id="filled-select-currency"
+                  select
+                  label="Item"
+                  defaultValue=""
+                  value={values.madeof}
+                  name="madeof"
+                  helperText="Please select an item"
+                  variant="outlined"
+                  sx={{ gridColumn: "span 2" }}
+                  onChange={handleChange}
+                >
+                  {itemOptions[selectedCategory]?.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
               )}
-              {
-  selectedCategory !== "building" && selectedCategory && (
-    <TextField
-      fullWidth
-      variant="outlined"
-      type="text"
-      label={
-        categoryOptions.find(
-          (option) => option.value === selectedCategory
-        ).textFieldLabel
-      }
-      onBlur={handleBlur}
-      onChange={handleChange}
-      value={values.code}
-      name="code"
-      error={!!touched.code && !!errors.code}
-      helperText={touched.code && errors.code}
-      sx={{ gridColumn: "span 2" }}
-    />
-  )
-}
+              {selectedCategory !== "building" && selectedCategory && (
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="text"
+                  label={
+                    categoryOptions.find(
+                      (option) => option.value === selectedCategory
+                    ).textFieldLabel
+                  }
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.code}
+                  name="code"
+                  error={!!touched.code && !!errors.code}
+                  helperText={touched.code && errors.code}
+                  sx={{ gridColumn: "span 2" }}
+                />
+              )}
 
               <TextField
                 fullWidth
@@ -147,10 +145,10 @@ const RequestForm = () => {
                 label="Description in breif"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.expense}
-                name="expense"
-                error={!!touched.expense && !!errors.expense}
-                helperText={touched.expense && errors.expense}
+                value={values.description}
+                name="description"
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
                 sx={{ gridColumn: "span 1" }}
               />
 
@@ -174,9 +172,7 @@ const RequestForm = () => {
               border={`1px solid ${palette.neutral.any}`}
               borderRadius="5px"
               p="1rem"
-            >
-              
-            </Box>
+            ></Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
                 ADD

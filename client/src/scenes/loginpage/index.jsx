@@ -45,6 +45,7 @@ export default function LoginIn() {
       navigate("/dashboard");
     }
     else{
+      alert("Invalid login details");
       navigate("/");
     }
   };

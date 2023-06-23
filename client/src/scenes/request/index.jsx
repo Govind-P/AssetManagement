@@ -17,26 +17,30 @@ const Request = () => {
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center"></Box>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      ></Box>
       <Header title="REQUEST" />
       <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              position : "absolute",
-              right : 20,
-              top : 100, 
-            }}
-            onClick={handleChange}
-          >
-            <AddIcon sx={{ mr: "10px" }} />
-            NEW REQUEST
-          </Button>
-        </Box>
+        <Button
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            padding: "10px 20px",
+            position: "absolute",
+            right: 20,
+            top: 100,
+          }}
+          onClick={handleChange}
+        >
+          <AddIcon sx={{ mr: "10px" }} />
+          NEW REQUEST
+        </Button>
+      </Box>
       <Box
         display="flex"
         justifyContent="space-between"
@@ -49,10 +53,7 @@ const Request = () => {
           Notifications
         </Typography>
       </Box>
-      <Box
-        maxHeight="400px" 
-        overflow="auto"
-      >
+      <Box maxHeight="400px" overflow="auto">
         {mockTransactions.map((transaction, i) => (
           <Box
             key={`${transaction.txId}-${i}`}
@@ -70,7 +71,9 @@ const Request = () => {
               >
                 {transaction.txId}
               </Typography>
-              <Typography color={colors.grey[100]}>{transaction.user}</Typography>
+              <Typography color={colors.grey[100]}>
+                {transaction.user}
+              </Typography>
             </Box>
             <Box color={colors.grey[100]}>{transaction.date}</Box>
             <Box color={colors.grey[100]}>{transaction.data}</Box>
