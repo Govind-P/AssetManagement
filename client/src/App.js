@@ -11,6 +11,7 @@ import Employee from "./scenes/employee";
 import Furniture from "./scenes/furniture";
 import Electronic from "./scenes/electronics";
 import Request from "./scenes/request";
+import RequestForm from "./scenes/requestform";
 import FurnitureForm from "./scenes/furnitureform";
 import AutomotiveForm from "./scenes/automotiveform";
 import ElectronicForm from "./scenes/electronicform";
@@ -54,7 +55,8 @@ function App() {
               <Route path="/automotive" element={isAuth ? <Automotive /> : <Navigate to="/"/>} />
               <Route path="/automotive/addautomotive" element={isAuth ? <AutomotiveForm /> : <Navigate to="/"/>} />
               <Route path="/electronics" element={isAuth ? <Electronic /> : <Navigate to="/"/>} />
-              <Route path="/electronic" element={isAuth ? <Request /> : <Navigate to="/"/>} />
+              <Route path="/request" element={isAuth ? <Request /> : <Navigate to="/"/>} />
+              <Route path="/request/addrequest" element={isAuth ? <RequestForm /> : <Navigate to="/"/>} />
               <Route path="/electronics/addelectronics" element={isAuth ? <ElectronicForm /> : <Navigate to="/"/>} />
               <Route path="/employee/addemployee" element={isAuth ? <EmployeeForm /> : <Navigate to="/"/>} />
               <Route path="/faq" element={isAuth ? <FAQ /> : <Navigate to="/"/>} />
