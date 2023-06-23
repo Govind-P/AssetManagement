@@ -1,77 +1,51 @@
-
 import { Box, Button, TextField, useTheme, Typography } from "@mui/material";
-import { tokens } from "../../theme";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Header from "../../components/Header";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import Switch from "@mui/material/Switch";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import React, { useState } from "react";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 
-const type = [
+const categoryOptions = [
   {
     value: "electronic",
     label: "Electronic",
+    textFieldLabel: "Device Number",
   },
   {
     value: "furniture",
     label: "Furniture",
+    textFieldLabel: "Furniture Code",
   },
   {
     value: "automotive",
     label: "Automotive",
+    textFieldLabel: "Vehicle Number",
   },
   {
     value: "building",
     label: "Building",
-  },
-];
-const madeof = [
-  {
-    value: "electronic",
-    label: "Electronic",
-  },
-  {
-    value: "furniture",
-    label: "Furniture",
-  },
-  {
-    value: "automotive",
-    label: "Automotive",
-  },
-  {
-    value: "building",
-    label: "Building",
+    textFieldLabel: "Building Code",
   },
 ];
 const itemOptions = {
-  electronic: ["Laptop", "Fan", "AC"],
-  furniture: ["Chair", "Table", "Sofa"],
-  automotive: ["Car", "Bike", "Truck"],
+  electronic: ["Laptop", "Fan", "AC","Others"],
+  furniture: ["Chair", "Table", "Bench","Dusk","Others"],
+  automotive: ["Car", "Bike", "Bus","Jeep","Others"],
   building: ["House", "Office", "Store"],
 };
+
 const RequestForm = () => {
   const theme = useTheme();
   const { palette } = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   const handleSubmit = (values) => {
     navigate("/request");
@@ -79,8 +53,6 @@ const RequestForm = () => {
 
   return (
     <Box m="20px">
-      <Header title="ADD REQUEST" />
-
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
@@ -104,71 +76,75 @@ const RequestForm = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              {" "}
               <TextField
-                id="filled-select-currency"
+                id="filled-select-category"
                 select
-                label="Select "
-                defaultValue="table"
-                value={values.ftype}
-                name="ftype"
-                helperText="Please select anyone"
+                label="Category"
+                defaultValue=""
+                value={values.category}
+                name="category"
+                helperText="Please select a category"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
                 onChange={(e) => {
                   handleChange(e);
-                  setSelectedType(e.target.value);
+                  setSelectedCategory(e.target.value);
+                  setSelectedType(""); // Reset the selected type when changing the category
                 }}
               >
-                {type.map((option) => (
+                {categoryOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
               </TextField>
-              <TextField
-  id="filled-select-currency"
-  select
-  label="Item"
-  defaultValue=""
-  value={values.madeof}
-  name="madeof"
-  helperText="Please select an item"
-  variant="outlined"
-  sx={{ gridColumn: "span 2" }}
-  onChange={handleChange}
->
-  {itemOptions[selectedType]?.map((option) => (
-    <MenuItem key={option} value={option}>
-      {option}
-    </MenuItem>
-  ))}
-</TextField>
-
-            
+              {selectedCategory !== "building" && (
               <TextField
                 id="filled-select-currency"
                 select
-                label="Select"
+                label="Item"
                 defaultValue=""
                 value={values.madeof}
                 name="madeof"
-                helperText="Please select furniture material"
+                helperText="Please select an item"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
                 onChange={handleChange}
               >
-                {madeof.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
+                {itemOptions[selectedCategory]?.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
                   </MenuItem>
                 ))}
               </TextField>
+              )}
+              {
+  selectedCategory !== "building" && selectedCategory && (
+    <TextField
+      fullWidth
+      variant="outlined"
+      type="text"
+      label={
+        categoryOptions.find(
+          (option) => option.value === selectedCategory
+        ).textFieldLabel
+      }
+      onBlur={handleBlur}
+      onChange={handleChange}
+      value={values.code}
+      name="code"
+      error={!!touched.code && !!errors.code}
+      helperText={touched.code && errors.code}
+      sx={{ gridColumn: "span 2" }}
+    />
+  )
+}
+
               <TextField
                 fullWidth
                 variant="outlined"
                 type="text"
-                label="Expense"
+                label="Description in breif"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.expense}
@@ -177,46 +153,29 @@ const RequestForm = () => {
                 helperText={touched.expense && errors.expense}
                 sx={{ gridColumn: "span 1" }}
               />
-              <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
-                <DatePicker
-                  label="Date of Purchase"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                />
-              </LocalizationProvider>
+
+              <TextField
+                fullWidth
+                variant="outlined"
+                type="text"
+                label="Expected Amount"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.expense}
+                name="expense"
+                error={!!touched.expense && !!errors.expense}
+                helperText={touched.expense && errors.expense}
+                sx={{ gridColumn: "span 1" }}
+              />
             </Box>
+
             <Box
               gridColumn="span 4"
               border={`1px solid ${palette.neutral.any}`}
               borderRadius="5px"
               p="1rem"
             >
-              <Dropzone
-                acceptedFiles=".jpg,.jpeg,.png,.pdf,.doc"
-                multiple={false}
-                onDrop={(acceptedFiles) =>
-                  setFieldValue("picture", acceptedFiles[0])
-                }
-              >
-                {({ getRootProps, getInputProps }) => (
-                  <Box
-                    {...getRootProps()}
-                    border={`2px dashed ${palette.secondary.main}`}
-                    p="1rem"
-                    sx={{ "&:hover": { cursor: "pointer" } }}
-                  >
-                    <input {...getInputProps()} />
-                    {!values.picture ? (
-                      <p>Upload Purchase invoice</p>
-                    ) : (
-                      <FlexBetween>
-                        <Typography>{values.picture.name}</Typography>
-                        <EditOutlinedIcon />
-                      </FlexBetween>
-                    )}
-                  </Box>
-                )}
-              </Dropzone>
+              
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
@@ -231,17 +190,14 @@ const RequestForm = () => {
 };
 
 const checkoutSchema = yup.object().shape({
-  fcode: yup.string().required("required"),
-  //ftype: yup.string().required("required"),
-  //madeof: yup.string().required("required"),
-  idate: yup.string().required("required"),
-  expense: yup.string().required("required"),
+  category: yup.string().required("Category is required"),
+  code: yup.string().required("Code is required"),
+  expense: yup.string().required("Expense is required"),
 });
+
 const initialValues = {
-  fcode: "",
-  ftype: "",
-  madeof: "",
-  idate: "",
+  category: "",
+  code: "",
   expense: "",
   picture: "",
 };
