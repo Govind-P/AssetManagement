@@ -29,10 +29,28 @@ const Automotive = () => {
       headerName: "Colour",
       headerAlign: "left",
       align: "left",
+      flex:1,
     },
     {
-      field: "Vehiclestatus",
-      headerName: "Vehicle Status",
+      field: "fueltype",
+      headerName: "Fuel Type",
+      headerAlign: "left",
+      align: "left",
+      flex:1,
+    },
+    {
+      field: "expense",
+      headerName: "Expense",
+      flex: 1,
+    },
+    {
+      field: "installeddate",
+      headerName: "Installed Date",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Status",
       flex: 1,
     },
     
