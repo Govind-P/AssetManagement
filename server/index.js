@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/officers.js';
 import {register} from './controller/auth.js';
+import { deviceregister } from './controller/device.js';
 import officer from './models/officer.js';
 import {officers} from './data/index.js';
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/register',register);
 app.use("/",authRoutes);
 app.use("/users",userRoutes);
+app.use("/adddevice",deviceregister)
 
 /*MONGOOSE SETUP*/
 const PORT=process.env.PORT || 6001;
