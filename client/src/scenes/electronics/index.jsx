@@ -1,38 +1,60 @@
 import { Box } from "@mui/material";
+import React, { useState, useEffect } from 'react';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataAutomotive } from "../../data/mockData";
 import Header from "../../components/Header";
-import { useTheme } from "@mui/material";
+import { useTheme} from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const   Electronic = () => {
+  const build = (useSelector((state) => state.user));
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/device?buildingcode='+build.buildingcode);
+        if (response.ok) {
+          const jsonData = await response.json();
+          const formattedData = jsonData.map((item, index) => ({ ...item, id: index + 1 }));
+          setData(formattedData);
+        } else {
+          console.error('Error:', response.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
   const handleChange = () => {
     navigate("/electronics/addelectronics");
   };
-
   const columns = [
     { field: "id", headerName: "ID", flex: 0.01 },
-    { field: "dcode", headerName: "Device Code",flex:1 },
+    { field: "devicecode", headerName: "Device Code",flex:1 },
     {
-      field: "dtype",
+      field: "devicetype",
       headerName: "Device Type",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "brandname",
+      field: "devicebrand",
       headerName: "Brand Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "modelname",
+      field: "devicemodel",
       headerName: "Model Name",
       headerAlign: "left",
       align: "left",
@@ -116,7 +138,7 @@ const   Electronic = () => {
         }}
       >
         <DataGrid
-          rows={mockDataAutomotive}
+          rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

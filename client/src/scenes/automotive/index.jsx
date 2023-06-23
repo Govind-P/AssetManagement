@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import React, { useState, useEffect } from 'react';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataAutomotive } from "../../data/mockData";
@@ -7,10 +8,30 @@ import { useTheme } from "@mui/material";
 import {  Button, IconButton, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Automotive = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
+  const build = (useSelector((state) => state.user));
+const [data, setData] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/automotive?buildingcode='+build.buildingcode);
+      if (response.ok) {
+        const jsonData = await response.json();
+        const formattedData = jsonData.map((item, index) => ({ ...item, id: index + 1 }));
+        setData(formattedData);
+      } else {
+        console.error('Error:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  fetchData();
+}, []);
   const handleChange = () => {
     navigate("/automotive/addautomotive");
   };
@@ -25,7 +46,7 @@ const Automotive = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "colour",
+      field: "vehiclecolor",
       headerName: "Colour",
       headerAlign: "left",
       align: "left",
@@ -44,7 +65,7 @@ const Automotive = () => {
       flex: 1,
     },
     {
-      field: "installeddate",
+      field: "pdate",
       headerName: "Installed Date",
       flex: 1,
     },
@@ -113,7 +134,7 @@ const Automotive = () => {
         }}
       >
         <DataGrid
-          rows={mockDataAutomotive}
+          rows={data}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
