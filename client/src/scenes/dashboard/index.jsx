@@ -120,8 +120,8 @@ const Dashboard = () => {
           {mockTransactions.map((transaction, i) => (
             <Box
               key={`${transaction.txId}-${i}`}
-              display="flex"
-              justifyContent="space-between"
+              display="grid"
+              gridTemplateColumns="1fr 1fr 0.25fr"
               alignItems="center"
               borderBottom={`4px solid ${colors.primary[500]}`}
               p="15px"
@@ -140,11 +140,13 @@ const Dashboard = () => {
               </Box>
               <Box color={colors.grey[100]}>{transaction.date}</Box>
               <Box
-                backgroundColor={colors.greenAccent[500]}
+                backgroundColor={transaction.cost === "Status : Rejected"
+                ? colors.redAccent[600]
+                : colors.greenAccent[700]}
                 p="5px 10px"
                 borderRadius="4px"
               >
-                ${transaction.cost}
+                {transaction.cost}
               </Box>
             </Box>
           ))}

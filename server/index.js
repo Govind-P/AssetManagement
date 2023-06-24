@@ -9,6 +9,7 @@ import {register} from './controller/auth.js';
 import { deviceregister } from './controller/device.js';
 import { vehicleregister } from './controller/automotive.js';
 import { furnitureregister } from './controller/furniture.js';
+import { addEmployee } from './controller/employee.js';
 import officer from './models/officer.js';
 import {officers} from './data/index.js';
 import { 
@@ -20,6 +21,9 @@ import {
 import { 
     getFurniture,
 } from './controller/furniture.js';
+import { 
+    getEmployee,
+} from './controller/employee.js';
 
 dotenv.config();
 const app = express();
@@ -38,6 +42,8 @@ app.use("/addfurniture",furnitureregister)
 app.use("/automotive",getVehicle)
 app.use("/furniture",getFurniture)
 app.use("/device",getDevice)
+app.use("/addemployee",addEmployee)
+app.use("/employee",getEmployee)
 
 /*MONGOOSE SETUP*/
 const PORT=process.env.PORT || 6001;

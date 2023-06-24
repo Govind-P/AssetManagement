@@ -12,7 +12,7 @@ export const furnitureregister=async(req, res) =>{
             status,
             invoice,
         }=req.body;
-
+        console.log(req.body);
         const newFurniture={
             buildingcode,
             furniturecode,
