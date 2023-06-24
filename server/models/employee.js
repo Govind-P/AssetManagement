@@ -7,42 +7,61 @@ const EmployeeSchema=new mongoose.Schema(
             type:String,
             required:true,
         },
-        devicecode:{
+        firstname:{
             type:String,
             required:true,
             min:2,
             max:50,
+        },
+        lastname:{
+            type:String,
+            required:true,
+        },
+        employeeid:{
+            type:String,
+            required:true,
             unique:true,
         },
-        devicetype:{
+        profilepass:{
             type:String,
             required:true,
+            min:6,
         },
-        devicebrand:{
-            type:String,
-            required:true,
-        },
-        devicemodel:{
+        joindate:{
             type:String,
             required:true,
             max:20,
         },
-        installeddate:{
-            type:String,
-            required:true,
-            max:20,
-        },
-        expense:{
+        dob:{
             type:String,
             required:true,
         },
-        status:{
+        age:{
             type:String,
             required:true,
-            max:50,
         },
-        invoice:{
+        email:{
             type:String,
+            required:true,
+        },
+        phone:{
+            type:String,
+            required:true,
+        },
+        address:{
+            type:String,
+            required:true,
+        },
+        position:{
+            type:String,
+            required:true,
+        },
+        idproof:{
+            type:String,
+            
+        },photo:{
+            type:String,
+            
         },
     },{timestamps:true}
 )

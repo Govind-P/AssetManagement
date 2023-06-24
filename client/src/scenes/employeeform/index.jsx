@@ -12,19 +12,80 @@ import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers";
 import React,{ useState} from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { useSelector } from "react-redux";
 import dayjs from 'dayjs';
 const EmployeeForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const navigate=useNavigate();
   const { palette } = useTheme();
 
-  const handleFormSubmit = (values) => {
-    navigate("/employee");
+  const build = (useSelector((state) => state.user));
+  const [values, setFormData] = useState({
+    profilepass:'',
+    buildingcode:'',
+    firstname:'',
+    lastname:'',
+    employeeid:'',
+    dob:'',
+    age:'',
+    email:'',
+    phone:'',
+    address:'',
+    joindate:'',
+    position:'',
+    idproof:'',
+    photo:'',
+  });
+  const handleSubmit = (values) => {
+    values.buildingcode = build.buildingcode;
+    values.status = 'Active'; 
+    const reg=fetch('http://localhost:3001/addemployee', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (response.status !== 201)
+          throw response;
+        return response.json()
+      }).then(data => {
+        alert("Added successfully");
+        navigate("/electronics");
+        setFormData({
+            profilepass:'',
+            buildingcode:'',
+            firstname:'',
+            lastname:'',
+            employeeid:'',
+            dob:'',
+            age:'',
+            email:'',
+            phone:'',
+            address:'',
+            joindate:'',
+            position:'',
+            idproof:'',
+            photo:'',
+        });
+    })
+      .catch((error) => {
+        alert("Please fill all fields");
+        console.error(error);
+      });
   };
   const [selectedDate, setSelectedDate] = useState(null);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    values.installeddate=date;
+    
+  };
+  const handleChange = (values) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [values.target.name]: values.target.value,
+    }));
   };
 
 
@@ -33,9 +94,9 @@ const EmployeeForm = () => {
       <Header title="NEW EMPLOYEE" subtitle="Create a New Employee Profile" />
 
       <Formik
-        onSubmit={handleFormSubmit}
+        onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        //validationSchema={checkoutSchema}
       >
         {({
           values,
@@ -46,7 +107,7 @@ const EmployeeForm = () => {
           handleChange,
           handleSubmit,
         }) => (
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleSubmit}>
             <Box
               display="grid"
               gap="30px"
@@ -62,10 +123,10 @@ const EmployeeForm = () => {
                 label="First Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.firstname}
+                name="firstname"
+                //error={!!touched.firstName && !!errors.firstName}
+                //helperText={touched.firstName && errors.firstName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -75,10 +136,10 @@ const EmployeeForm = () => {
                 label="Last Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.lastname}
+                name="lastname"
+                //error={!!touched.lastName && !!errors.lastName}
+                //helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -88,30 +149,19 @@ const EmployeeForm = () => {
                 label="Employee ID"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.eid}
-                name="eid"
-                error={!!touched.dob && !!errors.dob}
-                helperText={touched.dob && errors.dob}
+                value={values.employeeid}
+                name="employeeid"
+                //error={!!touched.dob && !!errors.dob}
+                //helperText={touched.dob && errors.dob}
                 sx={{ gridColumn: "span 1" }}
               />
-              {/* <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="DOB(DD/MM/YYYY)"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.dob}
-                name="dob"
-                error={!!touched.dob && !!errors.dob}
-                helperText={touched.dob && errors.dob}
-                sx={{ gridColumn: "span 1" }}
-              /> */}
               <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
               <DatePicker
                 label="DOB(DD/MM/YYYY)"
-                value={selectedDate}
-                onChange={handleDateChange}
+                value={values.dob}
+                onChange={(value) => {setFieldValue("dob", value.format("YYYY-MM-DD").toString(), true);
+                }}
+                name="dob"
                 
               />
               </LocalizationProvider>
@@ -125,8 +175,8 @@ const EmployeeForm = () => {
                 onChange={handleChange}
                 value={values.age}
                 name="age"
-                error={!!touched.age && !!errors.age}
-                helperText={touched.age && errors.age}
+                //error={!!touched.age && !!errors.age}
+                //helperText={touched.age && errors.age}
                 sx={{ gridColumn: "span 1" }}
               />
               <TextField
@@ -149,8 +199,8 @@ const EmployeeForm = () => {
                 label="Contact Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
+                value={values.phone}
+                name="phone"
                 error={!!touched.contact && !!errors.contact}
                 helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 1" }}
@@ -162,10 +212,10 @@ const EmployeeForm = () => {
                 label="Address"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                value={values.address}
+                name="address"
+                //error={!!touched.address1 && !!errors.address1}
+                //helperText={touched.address1 && errors.address1}
                 sx={{ gridColumn: "span 3" }}
               />
               <TextField
@@ -175,13 +225,13 @@ const EmployeeForm = () => {
                 label="Profile Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.profilepassword}
-                name="profilepassword"
-                error={!!touched.profilepassword && !!errors.profilepassword}
-                helperText={touched.profilepassword && errors.profilepassword}
-                sx={{ gridColumn: "span 1" }}
+                value={values.profilepass}
+                name="profilepass"
+                //error={!!touched.profilepassword && !!errors.profilepassword}
+                //helperText={touched.profilepassword && errors.profilepassword}
+                sx={{ gridColumn: "span 2" }}
               />
-              <TextField
+              {/*<TextField
                 fullWidth
                 variant="outlined"
                 type="password"
@@ -190,28 +240,17 @@ const EmployeeForm = () => {
                 onChange={handleChange}
                 value={values.cpassword}
                 name="cpassword"
-                error={!!touched.cpassword && !!errors.cpassword}
-                helperText={touched.cpassword && errors.cpassword}
+                //error={!!touched.cpassword && !!errors.cpassword}
+                //helperText={touched.cpassword && errors.cpassword}
                 sx={{ gridColumn: "span 1" }}
-              />
-              {/* <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Join Date"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.joindate}
-                name="joindate"
-                error={!!touched.joindate && !!errors.joindate}
-                helperText={touched.joindate && errors.joindate}
-                sx={{ gridColumn: "span 1" }}
-              /> */}
+              />*/}
               <LocalizationProvider dateAdapter={AdapterDayjs} dayjs={dayjs}>
               <DatePicker
                 label="Joining Date"
                 value={selectedDate}
-                onChange={handleDateChange}
+                onChange={(value) => {setFieldValue("joindate", value.format("YYYY-MM-DD").toString(), true);
+                }}
+                name="joindate"
               />
               </LocalizationProvider>
             
@@ -239,7 +278,7 @@ const EmployeeForm = () => {
                 acceptedFiles=".jpg,.jpeg,.png"
                 multiple={false}
                 onDrop={(acceptedFiles) =>
-                  setFieldValue("picture", acceptedFiles[0])
+                  setFieldValue("photo", acceptedFiles[0])
                 }
               >
                 {({ getRootProps, getInputProps }) => (
@@ -250,11 +289,11 @@ const EmployeeForm = () => {
                     sx={{ "&:hover": { cursor: "pointer" } }}
                   >
                     <input {...getInputProps()} />
-                    {!values.profileimage ? (
+                    {!values.photo ? (
                       <p>Add Employee Photo</p>
                     ) : (
                       <FlexBetween>
-                        <Typography>{values.profileimage.name}</Typography>
+                        <Typography>{values.photo.name}</Typography>
                         <EditOutlinedIcon />
                       </FlexBetween>
                     )}
@@ -272,7 +311,7 @@ const EmployeeForm = () => {
                 acceptedFiles=".jpg,.jpeg,.png,.pdf"
                 multiple={false}
                 onDrop={(acceptedFiles) =>
-                  setFieldValue("picture", acceptedFiles[0])
+                  setFieldValue("idproof", acceptedFiles[0])
                 }
               >
                 {({ getRootProps, getInputProps }) => (
@@ -324,30 +363,29 @@ const checkoutSchema = yup.object().shape({
   address1: yup.string().required("required"),
   joindate: yup.string().required("required"),
   position: yup.string().required("required"),
-  profilepassword: yup.string().required("required"),
-  profileimage: yup.string().required("required"),
-  cpassword: yup.string().required("required"),
+  profilepass: yup.string().required("required"),
+  photo: yup.string().required("required"),
+  //cpassword: yup.string().required("required"),
   idproof: yup.string().required("required"),
-  salary: yup.string().required("required"),
+  //salary: yup.string().required("required"),
   dob: yup.string().required("required"),
   
 });
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  dob: "",
-  eid:"",
+  profilepass:"",
+  buildingcode:"",
+  firstname:"",
+  lastname:"",
+  employeeid:"",
+  dob:"",
   age:"",
-  email: "",
-  contact: "",
-  address1: "",
-  joindate: "",
-  position: "",
-  profilepassword: "",
-  cpassword: "",
-  profileimage:"",
+  email:"",
+  phone:"",
+  address:"",
+  joindate:"",
+  position:"",
   idproof:"",
-  salary:""
+  photo:"",
 };
 
 export default EmployeeForm;

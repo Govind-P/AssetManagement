@@ -1,33 +1,41 @@
 import employee from '../models/employee.js'; 
 import bcrypt from "bcrypt";
 export const addEmployee=async(req, res) =>{
-    //console.log(req.body)
+    console.log(req.body)
     try{
         const{
             profilepass,
             buildingcode,
-            employeename,
-            devicetype,
-            devicebrand,
-            devicemodel,
-            installeddate,
-            expense,
-            status,
-            invoice,
+            firstname,
+            lastname,
+            employeeid,
+            dob,
+            age,
+            email,
+            phone,
+            address,
+            joindate,
+            position,
+            idproof,
+            photo,
         }=req.body;
         const salt=await bcrypt.genSalt();
-        const passwordHash=await bcrypt.hash(password, salt);
+        const passwordHash=await bcrypt.hash(profilepass, salt);
         const newEmployee=new employee({
             profilepass:passwordHash,
             buildingcode,
-            devicecode,
-            devicetype,
-            devicebrand,
-            devicemodel,
-            installeddate,
-            expense,
-            status,
-            invoice,
+            firstname,
+            lastname,
+            employeeid,
+            dob,
+            age,
+            email,
+            phone,
+            address,
+            joindate,
+            position,
+            idproof,
+            photo,
         });
         const savedEmployee =await newEmployee.save();
         res.status(201).json(savedEmployee);
