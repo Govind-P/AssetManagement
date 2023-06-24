@@ -186,7 +186,7 @@ const Form = () => {
                 sx={{ gridColumn: "span 1" }}
               />
             </Box>
-            <Box >
+            <Box marginTop="40px" >
               <Header1 title="Additional Details" />
 
               <Box
@@ -279,7 +279,8 @@ const Form = () => {
             <Box >
               
               <div>
-                <Button sx={{ marginBottom: "20px" }} variant="outlined" onClick={handleClickOpen}>
+                <Button sx={{ marginTop: "30px",backgroundColor: colors.blueAccent[700], }} 
+                variant="outlined" onClick={handleClickOpen}>
                   Add Block Details
                 </Button>
                 <Dialog open={open} onClose={handleClose}>
@@ -392,7 +393,7 @@ const Form = () => {
         p="15px"
       >
         <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-          Block etails
+          Block Details
         </Typography>
       </Box>
       <Box maxHeight="200px" overflow="auto">
