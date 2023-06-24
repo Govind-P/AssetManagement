@@ -1,28 +1,33 @@
 import mongoose from 'mongoose';
 
-const FurnitureSchema=new mongoose.Schema(
+const EmployeeSchema=new mongoose.Schema(
     {
         
         buildingcode:{
             type:String,
             required:true,
         },
-        furniturecode:{
+        devicecode:{
             type:String,
             required:true,
             min:2,
             max:50,
             unique:true,
         },
-        furnituretype:{
+        devicetype:{
             type:String,
             required:true,
         },
-        furniturematerial:{
+        devicebrand:{
             type:String,
             required:true,
         },
-        purchasedate:{
+        devicemodel:{
+            type:String,
+            required:true,
+            max:20,
+        },
+        installeddate:{
             type:String,
             required:true,
             max:20,
@@ -42,5 +47,5 @@ const FurnitureSchema=new mongoose.Schema(
     },{timestamps:true}
 )
 
-const furniture=mongoose.model("furniture",FurnitureSchema);
-export default furniture;
+const employee=mongoose.model("employee",EmployeeSchema);
+export default employee;

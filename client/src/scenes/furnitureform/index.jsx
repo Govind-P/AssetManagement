@@ -16,6 +16,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import React, { useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { useSelector } from "react-redux";
 
 
 const type = [
@@ -62,14 +63,60 @@ const FurnitureForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
+  const build = (useSelector((state) => state.user));
+  const [values, setFormData] = useState({
+    buildingcode:'',
+    furniturecode:'',
+    furnituretype:'',
+    furniturematerial:'',
+    purchasedate:'',
+    expense:'',
+    status:'',
+    invoice:'',
+  });
+  const handleSubmit = (values) => {
+    values.buildingcode = build.buildingcode;
+    values.status = 'Active'; 
+    const reg=fetch('http://localhost:3001/addfurniture', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => {
+        if (response.status !== 201)
+          throw response;
+        return response.json()
+      }).then(data => {
+        alert("Added successfully");
+        navigate("/furniture");
+        setFormData({
+          furniturecode:'',
+          furnituretype:'',
+          furniturematerial:'',
+          purchasedate:'',
+          expense:'',
+          status:'',
+          invoice:'',
+        });
+    })
+      .catch((error) => {
+        alert("Please fill all fields");
+        console.error(error);
+      });
+  };
   const [selectedDate, setSelectedDate] = useState(null);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    values.installeddate=date;
+    
   };
-
-  const handleSubmit = (values) => {
-    navigate("/furniture");
+  const handleChange = (values) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [values.target.name]: values.target.value,
+    }));
   };
 
   return (
@@ -79,7 +126,7 @@ const FurnitureForm = () => {
       <Formik
         onSubmit={handleSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        //validationSchema={checkoutSchema}
       >
         {({
           values,
@@ -106,8 +153,8 @@ const FurnitureForm = () => {
                 label="Furniture Code"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.fcode}
-                name="fcode"
+                value={values.furniturecode}
+                name="furniturecode"
                 error={!!touched.fcode && !!errors.fcode}
                 helperText={touched.fcode && errors.fcode}
                 sx={{ gridColumn: "span 2" }}
@@ -117,8 +164,8 @@ const FurnitureForm = () => {
                 select
                 label="Select "
                 defaultValue="table"
-                value={values.ftype}
-                name="ftype"
+                value={values.furnituretype}
+                name="furnituretype"
                 helperText="Please select furniture type"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
@@ -135,8 +182,8 @@ const FurnitureForm = () => {
                 select
                 label="Select"
                 defaultValue=""
-                value={values.madeof}
-                name="madeof"
+                value={values.furniturematerial}
+                name="furniturematerial"
                 helperText="Please select furniture material"
                 variant="outlined"
                 sx={{ gridColumn: "span 2" }}
@@ -144,7 +191,7 @@ const FurnitureForm = () => {
               >
                 {madeof.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
-                    {option.value}
+                    {option.label}
                   </MenuItem>
                 ))} 
               </TextField>             
@@ -165,7 +212,9 @@ const FurnitureForm = () => {
               <DatePicker
                 label="Date of Purchase"
                 value={selectedDate}
-                onChange={handleDateChange}
+                onChange={(value) => {setFieldValue("purchasedate", value.format("YYYY-MM-DD").toString(), true);
+                }}
+                name="purchasedate"
               />
               </LocalizationProvider>
             </Box>
@@ -224,12 +273,13 @@ const checkoutSchema = yup.object().shape({
   expense: yup.string().required("required"),
 });
 const initialValues = {
-  fcode: "",
-  ftype: "",
-  madeof: "",
-  idate: "",
-  expense: "",
-  picture:""
+furniturecode:"",
+furnituretype:"",
+furniturematerial:"",
+purchasedate:"",
+expense:"",
+status:"",
+invoice:"",
 };
 
 export default FurnitureForm;

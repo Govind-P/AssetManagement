@@ -4,41 +4,40 @@ export const furnitureregister=async(req, res) =>{
     try{
         const{
             buildingcode,
-            devicecode,
-            devicetype,
-            devicebrand,
-            devicemodel,
-            installeddate,
+            furniturecode,
+            furnituretype,
+            furniturematerial,
+            purchasedate,
             expense,
             status,
             invoice,
         }=req.body;
-
-        const newDevice=new device({
+        console.log(req.body);
+        const newFurniture={
             buildingcode,
-            devicecode,
-            devicetype,
-            devicebrand,
-            devicemodel,
-            installeddate,
+            furniturecode,
+            furnituretype,
+            furniturematerial,
+            purchasedate,
             expense,
             status,
             invoice,
-        });
-        const savedDevice =await newDevice.save();
-        res.status(201).json(savedDevice);
+        };
+        //const savedFurniture =await newFurniture.save();
+        const savedFurniture =await furniture.create(newFurniture);
+        res.status(201).json(savedFurniture);
 
     }catch(err){res.status(500).json({error:err.message});}
 }
 
 
 /*Read*/ 
-/*export const getDevice = async(req,res)=>{
+export const getFurniture = async(req,res)=>{
     try{
-        const {buildingcode}=req.params;
-        const devices = await device.findById(buildingcode);
-        res.status(200).json(devices);
+        const {buildingcode}=req.query;
+        const furnitures = await furniture.find({buildingcode:buildingcode});
+        res.status(200).json(furnitures);
     }catch(err){
         res.status(404).json({message: err.message});
     }
-}*/
+}
