@@ -13,7 +13,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { mockTransactions } from "../../data/mockData";
+import { mockblockdata } from "../../data/mockData";
 import { Typography } from "@mui/material";
 
 const Form = () => {
@@ -186,7 +186,7 @@ const Form = () => {
                 sx={{ gridColumn: "span 1" }}
               />
             </Box>
-            <Box >
+            <Box marginTop="40px" >
               <Header1 title="Additional Details" />
 
               <Box
@@ -279,7 +279,8 @@ const Form = () => {
             <Box >
               
               <div>
-                <Button sx={{ marginBottom: "20px" }} variant="outlined" onClick={handleClickOpen}>
+                <Button sx={{ marginTop: "30px",backgroundColor: colors.blueAccent[700], }} 
+                variant="outlined" onClick={handleClickOpen}>
                   Add Block Details
                 </Button>
                 <Dialog open={open} onClose={handleClose}>
@@ -392,18 +393,18 @@ const Form = () => {
         p="15px"
       >
         <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-          Block etails
+          Block Details
         </Typography>
       </Box>
       <Box maxHeight="200px" overflow="auto">
-        {mockTransactions.map((transaction, i) => (
+        {mockblockdata.map((transaction, i) => (
           <Box
             key={`${transaction.txId}-${i}`}
-            display="flex"
-            justifyContent="space-between"
+            display="grid"
+            gridTemplateColumns="1fr 1fr 1fr 0.25fr"
             alignItems="center"
             borderBottom={`4px solid ${colors.primary[500]}`}
-            p="15px"
+            p="10px"
           >
             <Box>
               <Typography
@@ -414,18 +415,54 @@ const Form = () => {
                 {transaction.txId}
               </Typography>
               <Typography color={colors.grey[100]}>
-                {transaction.user}
+                {transaction.bname}
               </Typography>
             </Box>
-            <Box color={colors.grey[100]}>{transaction.date}</Box>
-            <Box color={colors.grey[100]}>{transaction.data}</Box>
-            <Box
+            <Box>
+              <Typography
+                color={colors.greenAccent[500]}
+                variant="h5"
+                fontWeight="600"
+              >
+                {transaction.ixId}
+              </Typography>
+              <Typography color={colors.grey[100]}>
+                {transaction.idb}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                color={colors.greenAccent[500]}
+                variant="h5"
+                fontWeight="600"
+              >
+                {transaction.fxId}
+              </Typography>
+              <Typography color={colors.grey[100]}>
+                {transaction.numfloor}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                color={colors.greenAccent[500]}
+                variant="h5"
+                fontWeight="600"
+              >
+                {transaction.pxId}
+              </Typography>
+              <Typography color={colors.grey[100]}>
+                {transaction.parea}
+              </Typography>
+            </Box>
+            {/* <Box color={colors.grey[100]}>{transaction.numfloor}</Box>
+            <Box color={colors.grey[100]}>{transaction.parea}</Box> */}
+            {/* <Box
               backgroundColor={colors.greenAccent[500]}
               p="5px 10px"
               borderRadius="4px"
             >
               ${transaction.cost}
-            </Box>
+            </Box> */}
           </Box>
         ))}
       </Box>
