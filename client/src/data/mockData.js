@@ -266,6 +266,83 @@ export const mockDataInvoices = [
   },
 ];
 
+export const mockblockdata = [
+  // { 
+  //   bname: "A block",
+  //   numfloor: "3",
+  //   parea: "2021-09-01",
+  //   //cost: "Status: Approved ",
+  //   //data: "34",
+  // },
+  {
+    txId: "Block Nme",
+    bname: "A block",
+    ixId: "Block Id",
+    idb: "a12",
+    fxId:  "No of floors",
+    numfloor: "3",
+    pxId: "Plinth Area",
+    parea: "1000",
+  },
+  {
+    txId: "Block Nme",
+    bname: "B block",
+    ixId: "Block Id",
+    idb: "a13",
+    fxId:  "No of floors",
+    numfloor: "3",
+    pxId: "Plinth Area",
+    parea: "1500",
+  },
+  {
+    txId: "Block Nme",
+    bname: "C block",
+    ixId: "Block Id",
+    idb: "a14",
+    fxId:  "No of floors",
+    numfloor: "3",
+    pxId: "Plinth Area",
+    parea: "2000",
+    
+  },
+  // {
+  //   txId: "Admin",
+  //   user: "The request for purchasing fans",
+  //   date: "2022-04-01",
+  //   cost: "Status : Approved",
+  // },
+
+  // {
+  //   txId: "GEC Thrissur",
+  //   user: "Request to conduct hackathon",
+  //   date: "2022-11-05",
+  //   cost: "Status : Info",
+  // },
+  // {
+  //   txId: "0a123sb",
+  //   user: "stevebower",
+  //   date: "2022-11-02",
+  //   cost: "13.55",
+  // },
+  // {
+  //   txId: "01e4dsa",
+  //   user: "aberdohnny",
+  //   date: "2021-09-01",
+  //   cost: "43.95",
+  // },
+  // {
+  //   txId: "120s51a",
+  //   user: "wootzifer",
+  //   date: "2019-04-15",
+  //   cost: "24.20",
+  // },
+  // {
+  //   txId: "0315dsaa",
+  //   user: "jackdower",
+  //   date: "2022-04-01",
+  //   cost: "133.45",
+  // },
+];
 export const mockTransactions = [
   { 
     txId: "PWD Southern Region",
@@ -318,6 +395,7 @@ export const mockTransactions = [
   //   cost: "133.45",
   // },
 ];
+
 
 export const mockBarData = [
   {
