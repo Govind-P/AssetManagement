@@ -38,7 +38,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="0"
+            title="4"
             subtitle="Electronic Equipments"
             icon={
               <DevicesIcon
@@ -55,7 +55,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="0"
+            title="2"
             subtitle="Furnitures"
             icon={
               <TableRestaurantIcon
@@ -72,7 +72,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="0"
+            title="2"
             subtitle="Automotives"
             icon={
               <DriveEtaIcon
@@ -89,7 +89,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="0"
+            title="4"
             subtitle="Notifications"
             icon={
               <NotificationsOutlinedIcon

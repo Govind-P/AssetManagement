@@ -52,7 +52,7 @@ const EmployeeForm = () => {
         return response.json()
       }).then(data => {
         alert("Added successfully");
-        navigate("/electronics");
+        navigate("/employee");
         setFormData({
             profilepass:'',
             buildingcode:'',

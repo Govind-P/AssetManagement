@@ -1,7 +1,6 @@
 import employee from '../models/employee.js'; 
 import bcrypt from "bcrypt";
 export const addEmployee=async(req, res) =>{
-    console.log(req.body)
     try{
         const{
             profilepass,

@@ -50,7 +50,7 @@ const Request = () => {
         p="15px"
       >
         <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-          Notifications
+          Requests
         </Typography>
       </Box>
       <Box maxHeight="400px" overflow="auto">
@@ -78,11 +78,13 @@ const Request = () => {
             <Box color={colors.grey[100]}>{transaction.date}</Box>
             <Box color={colors.grey[100]}>{transaction.data}</Box>
             <Box
-              backgroundColor={colors.greenAccent[500]}
+              backgroundColor={transaction.cost === "Status : Rejected"
+                ? colors.redAccent[600]
+                : colors.greenAccent[700]}
               p="5px 10px"
               borderRadius="4px"
             >
-              ${transaction.cost}
+              {transaction.cost}
             </Box>
           </Box>
         ))}

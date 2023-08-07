@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid ,GridToolbar} from "@mui/x-data-grid";
+import React, { useState, useEffect } from 'react';
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
@@ -9,7 +10,29 @@ import Header from "../../components/Header";
 import {  Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Employee = () => {
+  const build = (useSelector((state) => state.user));
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/employee?buildingcode='+build.buildingcode);
+        if (response.ok) {
+          const jsonData = await response.json();
+          const formattedData = jsonData.map((item, index) => ({ ...item, id: index + 1 }));
+          setData(formattedData);
+        } else {
+          console.error('Error:', response.status);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate=useNavigate();
@@ -19,7 +42,7 @@ const Employee = () => {
   const columns = [
     { field: "id", headerName: "ID" },
     {
-      field: "name",
+      field: "firstname",
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
@@ -102,7 +125,7 @@ const Employee = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid checkboxSelection rows={data} columns={columns} components={{ Toolbar: GridToolbar }}/>
       </Box>
     </Box>
   );
